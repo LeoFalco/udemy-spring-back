@@ -1,13 +1,17 @@
 package com.nelioalves.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
-@Table(name = "pedido")
-public class Pedido {
+@Table(name = "cliente")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Cliente implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
     private String nome;
@@ -15,10 +19,10 @@ public class Pedido {
     private String inscricaoFederal;
     private TipoCliente tipo;
 
-    public Pedido() {
+    public Cliente() {
     }
 
-    public Pedido(Integer id, String nome, String email, String inscricaoFederal, TipoCliente tipo) {
+    public Cliente(Integer id, String nome, String email, String inscricaoFederal, TipoCliente tipo) {
         this.id = id;
         this.nome = nome;
         this.email = email;

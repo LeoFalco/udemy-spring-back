@@ -2,13 +2,13 @@ package com.nelioalves.cursomc.exeptions;
 
 import java.io.Serializable;
 
-public class ObjectNotFoundException extends RuntimeException {
+public class ObjectAlreadyExistsException extends RuntimeException {
 
-    public ObjectNotFoundException(String message) {
+    public ObjectAlreadyExistsException(String message) {
         super(message);
     }
 
-    public ObjectNotFoundException(Class<?> tipo, Serializable id) {
-        super("Objeto não encontrado! Id:" + id + ", Tipo: " + tipo.getName());
+    public ObjectAlreadyExistsException(Class<?> tipo, Serializable id) {
+        super("Objeto já existe! Id:" + id + ", Tipo: " + tipo.getName());
     }
 }

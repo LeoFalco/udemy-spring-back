@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CrudServiceInteface<T, I> {
 
-    public T salvar();
+    public T salvar(T t);
 
     public List<T> listar();
 

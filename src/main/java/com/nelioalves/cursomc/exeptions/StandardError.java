@@ -1,36 +1,36 @@
 package com.nelioalves.cursomc.exeptions;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.Serializable;
 
-public class StantardError implements Serializable {
+
+public class StandardError implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer status;
-    private String errorName;
+    private String error;
     private String message;
-    private Long timestamp;
+    private Integer status;
+    private String path;
+    private Long timestamp = System.currentTimeMillis();
 
-    public StantardError(Integer status, String errorName, String message, Long timestamp) {
-        this.status = status;
-        this.errorName = errorName;
-        this.message = message;
-        this.timestamp = timestamp;
+    public StandardError(HttpStatus status, RuntimeException ex, String path) {
+        this.error = ex.getClass().getSimpleName();
+        this.message = ex.getMessage();
+        this.status = status.value();
+        this.path = path;
     }
 
-    public Integer getStatus() {
-        return status;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public String getError() {
+        return error;
     }
 
-    public String getErrorName() {
-        return errorName;
-    }
-
-    public void setErrorName(String errorName) {
-        this.errorName = errorName;
+    public void setError(String error) {
+        this.error = error;
     }
 
     public String getMessage() {
@@ -41,11 +41,38 @@ public class StantardError implements Serializable {
         this.message = message;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public Long getTimestamp() {
         return timestamp;
     }
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "StandardError{" +
+                "error='" + error + '\'' +
+                ", message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                ", path='" + path + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }

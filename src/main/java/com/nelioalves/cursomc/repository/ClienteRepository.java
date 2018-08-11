@@ -1,7 +1,9 @@
 package com.nelioalves.cursomc.repository;
 
-import com.nelioalves.cursomc.model.Pedido;
+import com.nelioalves.cursomc.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
+@Repository
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 }
