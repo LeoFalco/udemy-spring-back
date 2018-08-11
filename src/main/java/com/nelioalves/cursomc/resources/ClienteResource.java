@@ -28,5 +28,4 @@ public class ClienteResource {
         return clienteService.get(id);
     }
 
-
 }

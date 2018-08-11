@@ -1,6 +1,7 @@
 package com.nelioalves.cursomc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
 
 import javax.persistence.*;
@@ -78,6 +79,7 @@ public class Cliente implements Serializable {
     }
 
     @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
     public List<Endereco> getEnderecos() {
         return enderecos;
     }

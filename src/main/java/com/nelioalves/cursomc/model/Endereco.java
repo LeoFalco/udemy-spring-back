@@ -1,5 +1,7 @@
 package com.nelioalves.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -98,7 +100,8 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
-    @ManyToOne()
+    @ManyToOne
+    @JsonBackReference
     public Cliente getCliente() {
         return cliente;
     }
