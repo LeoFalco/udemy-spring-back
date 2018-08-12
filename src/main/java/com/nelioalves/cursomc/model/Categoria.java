@@ -1,9 +1,9 @@
 package com.nelioalves.cursomc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,8 @@ public class Categoria implements Serializable {
         this.id = id;
     }
 
+    @NotBlank
+    @Column(columnDefinition = "varchar(50)", unique = true, length = 50)
     public String getNome() {
         return nome;
     }
@@ -44,7 +46,6 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "categorias")
     public List<Produto> getProdutos() {
         return produtos;
@@ -65,5 +66,13 @@ public class Categoria implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                '}';
     }
 }

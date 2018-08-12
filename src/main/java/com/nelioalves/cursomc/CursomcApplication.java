@@ -56,7 +56,7 @@ public class CursomcApplication implements CommandLineRunner {
     public void run(String... args) {
 
 
-/*
+
         Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
 
@@ -164,7 +164,7 @@ public class CursomcApplication implements CommandLineRunner {
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
         pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
         itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
-*/
+
 
     }
 }

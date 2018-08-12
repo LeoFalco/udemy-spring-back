@@ -1,14 +1,14 @@
 package com.nelioalves.cursomc.resources;
 
-import com.nelioalves.cursomc.exeptions.ObjectAlreadyExistsException;
 import com.nelioalves.cursomc.model.Categoria;
 import com.nelioalves.cursomc.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
@@ -17,8 +17,7 @@ public class CategoriaResource {
 
     private static final Logger logger = Logger.getLogger(CategoriaResource.class.getName());
 
-    final
-    CategoriaService service;
+    final CategoriaService service;
 
     @Autowired
     public CategoriaResource(CategoriaService service) {
@@ -41,18 +40,14 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Categoria post(@RequestBody Categoria categoria) {
-
-        try {
-            Categoria serviceOne = service.get(categoria.getId());
-
-            throw new ObjectAlreadyExistsException(Categoria.class, categoria.getId());
-        } catch (EntityNotFoundException ignore) {
-        }
-
-
+    public ResponseEntity<Categoria> post(@RequestBody Categoria categoria) {
         categoria = service.salvar(categoria);
+        String uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(categoria.getId())
+                .toUri().toString();
 
-        return categoria;
+
+        return ResponseEntity.status(HttpStatus.CREATED).header("location", uri).body(categoria);
     }
 }

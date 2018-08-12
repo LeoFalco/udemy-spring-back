@@ -1,6 +1,6 @@
 package com.nelioalves.cursomc.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -101,7 +101,7 @@ public class Endereco implements Serializable {
     }
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     public Cliente getCliente() {
         return cliente;
     }

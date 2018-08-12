@@ -4,20 +4,31 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 
 public class StandardError implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String error;
-    private String message;
+    private List<String> message;
     private Integer status;
     private String path;
+
+    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:SS.ssss")
     private Long timestamp = System.currentTimeMillis();
 
-    public StandardError(HttpStatus status, RuntimeException ex, String path) {
+    public StandardError(HttpStatus status, Exception ex, String path) {
         this.error = ex.getClass().getSimpleName();
-        this.message = ex.getMessage();
+        this.message = Collections.singletonList(ex.getMessage());
+        this.status = status.value();
+        this.path = path;
+    }
+
+    public StandardError(HttpStatus status, Exception ex, String path, List<String> messages) {
+        this.error = ex.getClass().getSimpleName();
+        this.message = messages;
         this.status = status.value();
         this.path = path;
     }
@@ -34,11 +45,11 @@ public class StandardError implements Serializable {
         this.error = error;
     }
 
-    public String getMessage() {
+    public List<String> getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(List<String> message) {
         this.message = message;
     }
 
@@ -58,7 +69,6 @@ public class StandardError implements Serializable {
         this.path = path;
     }
 
-    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:SS.ssss")
     public Long getTimestamp() {
         return timestamp;
     }

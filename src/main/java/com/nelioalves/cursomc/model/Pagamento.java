@@ -1,6 +1,6 @@
 package com.nelioalves.cursomc.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.model.enumerador.EstadoPagamento;
 
 import javax.persistence.*;
@@ -45,7 +45,7 @@ public abstract class Pagamento implements Serializable {
 
 
     @OneToOne
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "pedido_id")
     @MapsId
     public Pedido getPedido() {

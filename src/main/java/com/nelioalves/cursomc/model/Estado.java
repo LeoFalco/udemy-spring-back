@@ -1,6 +1,6 @@
 package com.nelioalves.cursomc.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,7 +45,7 @@ public class Estado implements Serializable {
     }
 
     @OneToMany(mappedBy = "estado")
-    @JsonBackReference
+    @JsonIgnore
     public List<Cidade> getCidades() {
         return cidades;
     }

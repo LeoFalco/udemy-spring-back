@@ -1,13 +1,10 @@
 package com.nelioalves.cursomc.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,7 +52,6 @@ public class Pedido implements Serializable {
         this.instante = instante;
     }
 
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     public Pagamento getPagamento() {
         return pagamento;
@@ -65,8 +61,6 @@ public class Pedido implements Serializable {
         this.pagamento = pagamento;
     }
 
-    @JsonManagedReference
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     public Cliente getCliente() {
