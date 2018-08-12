@@ -2,6 +2,9 @@ package com.nelioalves.cursomc.model;
 
 import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 
+import javax.persistence.Entity;
+
+@Entity
 public class PagamentoCartao extends Pagamento {
     private static final long serialversionUID = 1L;
 

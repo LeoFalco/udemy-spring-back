@@ -1,9 +1,12 @@
 package com.nelioalves.cursomc.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 
+@Entity
+@Table(name = "pedido")
 public class Pedido implements Serializable {
     private static final long serialversionUID = 1L;
 
@@ -24,6 +27,8 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -32,6 +37,7 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
     public Calendar getInstante() {
         return instante;
     }
@@ -40,6 +46,7 @@ public class Pedido implements Serializable {
         this.instante = instante;
     }
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     public Pagamento getPagamento() {
         return pagamento;
     }
@@ -48,6 +55,7 @@ public class Pedido implements Serializable {
         this.pagamento = pagamento;
     }
 
+    @ManyToOne
     public Cliente getCliente() {
         return cliente;
     }
@@ -56,6 +64,7 @@ public class Pedido implements Serializable {
         this.cliente = cliente;
     }
 
+    @OneToOne
     public Endereco getEnderecoDeEntrega() {
         return enderecoDeEntrega;
     }

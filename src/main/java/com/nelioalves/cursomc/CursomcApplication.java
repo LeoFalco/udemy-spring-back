@@ -38,6 +38,8 @@ public class CursomcApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        /*
         Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
 
@@ -120,6 +122,6 @@ public class CursomcApplication implements CommandLineRunner {
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
-
+*/
     }
 }

@@ -2,9 +2,12 @@ package com.nelioalves.cursomc.model;
 
 import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pagamento implements Serializable {
     private static final long serialversionUID = 1L;
 
@@ -21,6 +24,7 @@ public abstract class Pagamento implements Serializable {
         this.pedido = pedido;
     }
 
+    @Id
     public Integer getId() {
         return id;
     }
@@ -37,6 +41,8 @@ public abstract class Pagamento implements Serializable {
         this.estado = estado;
     }
 
+    @MapsId
+    @OneToOne
     public Pedido getPedido() {
         return pedido;
     }

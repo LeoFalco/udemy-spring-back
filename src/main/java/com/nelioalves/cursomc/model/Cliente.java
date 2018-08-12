@@ -99,7 +99,7 @@ public class Cliente implements Serializable {
         this.telefones = telefones;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "cliente")
     public List<Pedido> getPedidos() {
         return pedidos;
     }
