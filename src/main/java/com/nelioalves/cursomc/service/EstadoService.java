@@ -40,7 +40,7 @@ public class EstadoService implements CrudServiceInteface<Estado, String> {
     }
 
     @Override
-    public void atualizar(Estado estado) {
+    public Estado atualizar(Estado estado) {
         throw new OperationNotSupertedYetException();
     }
 }

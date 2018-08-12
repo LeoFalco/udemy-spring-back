@@ -41,7 +41,7 @@ public class CidadeService implements CrudServiceInteface<Cidade, Integer> {
     }
 
     @Override
-    public void atualizar(Cidade cidade) {
+    public Cidade atualizar(Cidade cidade) {
         throw new OperationNotSupertedYetException();
     }
 }

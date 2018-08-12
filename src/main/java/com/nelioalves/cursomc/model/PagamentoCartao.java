@@ -1,6 +1,7 @@
 package com.nelioalves.cursomc.model;
 
-import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
+import com.nelioalves.cursomc.model.enumerador.EstadoPagamento;
+import com.nelioalves.cursomc.model.enumerador.TipoCliente;
 
 import javax.persistence.Entity;
 

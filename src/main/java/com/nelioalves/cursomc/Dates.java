@@ -4,8 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Dates {
+    private static final Logger logger = Logger.getLogger(Dates.class.getName());
 
     private static final String DD_MM_YYYY_HH_MM = "dd/MM/yyyy HH:mm";
 
@@ -18,15 +21,9 @@ public class Dates {
         Date date = null;
         try {
             date = new SimpleDateFormat(pattern).parse(data);
-            System.out.println("teste");
-        } catch (ParseException ignore) {
-            System.out.println("erro");
+        } catch (ParseException ex) {
+            logger.log(Level.WARNING, ex.getMessage());
         }
-
-        return null;
-        /*
-        return Optional.ofNullable(date)
-                .orElseThrow(() -> new IllegalArgumentException("impossível usar o formato " + pattern + " para converter a data " + data));
-                */
+        return date;
     }
 }

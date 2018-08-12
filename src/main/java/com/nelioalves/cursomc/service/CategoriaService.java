@@ -40,7 +40,7 @@ public class CategoriaService implements CrudServiceInteface<Categoria, Integer>
     }
 
     @Override
-    public void atualizar(Categoria categoria) {
+    public Categoria atualizar(Categoria categoria) {
         throw new OperationNotSupertedYetException();
     }
 

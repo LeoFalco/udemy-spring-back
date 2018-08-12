@@ -1,5 +1,6 @@
 package com.nelioalves.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
@@ -101,6 +102,7 @@ public class Cliente implements Serializable {
     }
 
     @OneToMany(mappedBy = "cliente")
+    @JsonBackReference
     public List<Pedido> getPedidos() {
         return pedidos;
     }

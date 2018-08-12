@@ -40,7 +40,7 @@ public class ClienteService implements CrudServiceInteface<Cliente, Integer> {
     }
 
     @Override
-    public void atualizar(Cliente cliente) {
+    public Cliente atualizar(Cliente cliente) {
         throw new OperationNotSupertedYetException();
     }
 }

@@ -12,6 +12,6 @@ public interface CrudServiceInteface<T, I> {
 
     void remover(T t);
 
-    void atualizar(T t);
+    T atualizar(T t);
 
 }

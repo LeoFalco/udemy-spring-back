@@ -1,7 +1,7 @@
 package com.nelioalves.cursomc;
 
-import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 import com.nelioalves.cursomc.model.*;
+import com.nelioalves.cursomc.model.enumerador.EstadoPagamento;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
 import com.nelioalves.cursomc.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
@@ -58,6 +56,7 @@ public class CursomcApplication implements CommandLineRunner {
     public void run(String... args) {
 
 
+/*
         Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
 
@@ -163,15 +162,9 @@ public class CursomcApplication implements CommandLineRunner {
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
-
-
         pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
-
-
-
-
         itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
-
+*/
 
     }
 }

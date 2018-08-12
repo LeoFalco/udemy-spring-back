@@ -3,6 +3,7 @@ package com.nelioalves.cursomc.exeptions;
 public class OperationNotSupertedYetException extends RuntimeException {
 
     public OperationNotSupertedYetException() {
+        super("Operação ainda não implementada");
     }
 
     public OperationNotSupertedYetException(String message) {

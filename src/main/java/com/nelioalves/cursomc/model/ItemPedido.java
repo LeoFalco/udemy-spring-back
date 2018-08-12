@@ -36,13 +36,13 @@ public class ItemPedido implements Serializable {
         return id.getPedido();
     }
 
-    @JsonIgnore
     @Transient
     public Produto getProduto() {
         return id.getProduto();
     }
 
     @EmbeddedId
+    @JsonIgnore
     public ItemPedidoPK getId() {
         return id;
     }

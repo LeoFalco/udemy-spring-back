@@ -1,5 +1,6 @@
 package com.nelioalves.cursomc.exeptions;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -57,6 +58,7 @@ public class StandardError implements Serializable {
         this.path = path;
     }
 
+    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:SS.ssss")
     public Long getTimestamp() {
         return timestamp;
     }

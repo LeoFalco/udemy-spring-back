@@ -2,46 +2,45 @@ package com.nelioalves.cursomc.service;
 
 import com.nelioalves.cursomc.exeptions.OperationNotSupertedYetException;
 import com.nelioalves.cursomc.interfaces.CrudServiceInteface;
-import com.nelioalves.cursomc.model.Endereco;
-import com.nelioalves.cursomc.repository.EnderecoRepository;
+import com.nelioalves.cursomc.model.Pedido;
+import com.nelioalves.cursomc.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EnderecoService implements CrudServiceInteface<Endereco, Integer> {
+public class PedidoService implements CrudServiceInteface<Pedido, Integer> {
 
-    final
-    EnderecoRepository repo;
+    private final PedidoRepository repo;
 
     @Autowired
-    public EnderecoService(EnderecoRepository repo) {
+    public PedidoService(PedidoRepository repo) {
         this.repo = repo;
     }
 
     @Override
-    public Endereco salvar(Endereco endereco) {
-        return repo.save(endereco);
+    public Pedido salvar(Pedido pedido) {
+        return repo.save(pedido);
     }
 
     @Override
-    public List<Endereco> listar() {
+    public List<Pedido> listar() {
         return repo.findAll();
     }
 
     @Override
-    public Endereco get(Integer integer) {
+    public Pedido get(Integer integer) {
         return repo.getOne(integer);
     }
 
     @Override
-    public void remover(Endereco endereco) {
-        repo.delete(endereco);
+    public void remover(Pedido pedido) {
+        repo.delete(pedido);
     }
 
     @Override
-    public Endereco atualizar(Endereco endereco) {
+    public Pedido atualizar(Pedido pedido) {
         throw new OperationNotSupertedYetException();
     }
 }

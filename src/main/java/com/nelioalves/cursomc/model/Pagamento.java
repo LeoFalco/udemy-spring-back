@@ -1,7 +1,7 @@
 package com.nelioalves.cursomc.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
+import com.nelioalves.cursomc.model.enumerador.EstadoPagamento;
 
 import javax.persistence.*;
 import java.io.Serializable;

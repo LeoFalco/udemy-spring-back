@@ -1,6 +1,8 @@
 package com.nelioalves.cursomc.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "pedido")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -63,6 +66,7 @@ public class Pedido implements Serializable {
     }
 
     @JsonManagedReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     public Cliente getCliente() {
