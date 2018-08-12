@@ -19,16 +19,14 @@ public class Pedido implements Serializable {
     public Pedido() {
     }
 
-    public Pedido(Integer id, Calendar instante, Pagamento pagamento, Cliente cliente, Endereco enderecoDeEntrega) {
+    public Pedido(Integer id, Calendar instante, Cliente cliente, Endereco enderecoDeEntrega) {
         this.id = id;
         this.instante = instante;
-        this.pagamento = pagamento;
         this.cliente = cliente;
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -46,7 +44,8 @@ public class Pedido implements Serializable {
         this.instante = instante;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
+    @MapsId
+    @OneToOne
     public Pagamento getPagamento() {
         return pagamento;
     }

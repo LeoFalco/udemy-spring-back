@@ -3,6 +3,8 @@ package com.nelioalves.cursomc.model;
 import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+
 
 @Entity
 public class PagamentoCartao extends Pagamento {
@@ -10,9 +12,10 @@ public class PagamentoCartao extends Pagamento {
 
     private Integer numeroDeParcelas;
 
-    public PagamentoCartao(Integer numeroDeParcelas) {
-        this.numeroDeParcelas = numeroDeParcelas;
+    public PagamentoCartao() {
+        super();
     }
+
 
     public PagamentoCartao(Integer id, EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {
         super(id, estado, pedido);

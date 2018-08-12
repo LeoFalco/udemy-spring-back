@@ -25,6 +25,7 @@ public abstract class Pagamento implements Serializable {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -33,6 +34,7 @@ public abstract class Pagamento implements Serializable {
         this.id = id;
     }
 
+    @Enumerated(EnumType.STRING)
     public EstadoPagamento getEstado() {
         return estado;
     }
@@ -41,8 +43,8 @@ public abstract class Pagamento implements Serializable {
         this.estado = estado;
     }
 
-    @MapsId
-    @OneToOne
+
+    @OneToOne(mappedBy = "pagamento", cascade = CascadeType.ALL)
     public Pedido getPedido() {
         return pedido;
     }

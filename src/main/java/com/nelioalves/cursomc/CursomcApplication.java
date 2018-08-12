@@ -1,5 +1,6 @@
 package com.nelioalves.cursomc;
 
+import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 import com.nelioalves.cursomc.model.*;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
 import com.nelioalves.cursomc.repository.*;
@@ -8,9 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.persistence.CollectionTable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +29,10 @@ public class CursomcApplication implements CommandLineRunner {
     private ClienteRepository clienteRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
 
 
     public static void main(String[] args) {
@@ -39,7 +42,7 @@ public class CursomcApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        /*
+
         Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
 
@@ -116,12 +119,24 @@ public class CursomcApplication implements CommandLineRunner {
         Endereco e2 = new Endereco(null, "Avenida Mattos", 105, "sala 800", "Centro", "3877012", c2, cli1);
 
 
+        Pedido ped1 = new Pedido(null, Calendars.toCalendar("30/09/2017 10:32"), cli1, e1);
+        Pagamento pagto1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+        ped1.setPagamento(pagto1);
+
+        Pedido ped2 = new Pedido(null, Calendars.toCalendar("10/10/2017 19:35"), cli1, e2);
+        Pagamento pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped1, Calendars.toCalendar("20/10/2017 19:35"), null);
+        ped2.setPagamento(pagto2);
+
+        cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+
         estadoRepository.saveAll(estadoList);
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
         clienteRepository.save(cli1);
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
-*/
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
     }
 }

@@ -3,6 +3,7 @@ package com.nelioalves.cursomc.model;
 import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Calendar;
@@ -44,5 +45,9 @@ public class PagamentoBoleto extends Pagamento {
 
     public void setDataVendimento(Calendar dataVendimento) {
         this.dataVencimento = dataVendimento;
+    }
+
+    public void setDataVencimento(Calendar dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 }
