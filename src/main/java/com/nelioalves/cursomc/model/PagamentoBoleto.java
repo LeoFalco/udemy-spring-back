@@ -3,17 +3,17 @@ package com.nelioalves.cursomc.model;
 import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 public class PagamentoBoleto extends Pagamento {
     private static final long serialversionUID = 1L;
 
-    private Calendar dataPagamento;
-    private Calendar dataVencimento;
+    private Date dataPagamento;
+    private Date dataVencimento;
 
     public PagamentoBoleto() {
         super();
@@ -22,32 +22,32 @@ public class PagamentoBoleto extends Pagamento {
     public PagamentoBoleto(Integer id,
                            EstadoPagamento estado,
                            Pedido pedido,
-                           Calendar dataPagamento,
-                           Calendar dataVendimento) {
+                           Date dataPagamento,
+                           Date dataVendimento) {
         super(id, estado, pedido);
         this.dataPagamento = dataPagamento;
         this.dataVencimento = dataVendimento;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    public Calendar getDataPagamento() {
+    public Date getDataPagamento() {
         return dataPagamento;
     }
 
-    public void setDataPagamento(Calendar dataPagamento) {
+    public void setDataPagamento(Date dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
 
     @Temporal(TemporalType.DATE)
-    public Calendar getDataVencimento() {
+    public Date getDataVencimento() {
         return dataVencimento;
     }
 
-    public void setDataVendimento(Calendar dataVendimento) {
+    public void setDataVendimento(Date dataVendimento) {
         this.dataVencimento = dataVendimento;
     }
 
-    public void setDataVencimento(Calendar dataVencimento) {
+    public void setDataVencimento(Date dataVencimento) {
         this.dataVencimento = dataVencimento;
     }
 }

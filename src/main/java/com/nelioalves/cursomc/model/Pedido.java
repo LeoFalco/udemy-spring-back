@@ -1,25 +1,32 @@
 package com.nelioalves.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Objects;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pedido")
 public class Pedido implements Serializable {
-    private static final long serialversionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private Calendar instante;
+    private Date instante;
     private Pagamento pagamento;
     private Cliente cliente;
     private Endereco enderecoDeEntrega;
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Pedido() {
     }
 
-    public Pedido(Integer id, Calendar instante, Cliente cliente, Endereco enderecoDeEntrega) {
+    public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+        super();
         this.id = id;
         this.instante = instante;
         this.cliente = cliente;
@@ -27,6 +34,7 @@ public class Pedido implements Serializable {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -35,17 +43,17 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    public Calendar getInstante() {
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    public Date getInstante() {
         return instante;
     }
 
-    public void setInstante(Calendar instante) {
+    public void setInstante(Date instante) {
         this.instante = instante;
     }
 
-    @MapsId
-    @OneToOne
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     public Pagamento getPagamento() {
         return pagamento;
     }
@@ -54,7 +62,9 @@ public class Pedido implements Serializable {
         this.pagamento = pagamento;
     }
 
+    @JsonManagedReference
     @ManyToOne
+    @JoinColumn(name = "cliente_id")
     public Cliente getCliente() {
         return cliente;
     }
@@ -63,7 +73,8 @@ public class Pedido implements Serializable {
         this.cliente = cliente;
     }
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "endereco_de_entrega_id")
     public Endereco getEnderecoDeEntrega() {
         return enderecoDeEntrega;
     }
@@ -72,16 +83,46 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pedido)) return false;
-        Pedido pedido = (Pedido) o;
-        return Objects.equals(id, pedido.id);
+    @OneToMany(mappedBy = "id.pedido")
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Pedido other = (Pedido) obj;
+        if (id == null) {
+            return other.id == null;
+        } else return id.equals(other.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", instante=" + "{omitido}" +
+                ", pagamento=" + pagamento +
+                ", cliente=" + cliente.getId() +
+                ", enderecoDeEntrega=" + enderecoDeEntrega +
+                ", itens=" + itens +
+                '}';
     }
 }

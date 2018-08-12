@@ -1,5 +1,6 @@
 package com.nelioalves.cursomc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nelioalves.cursomc.enumerator.model.EstadoPagamento;
 
 import javax.persistence.*;
@@ -25,7 +26,6 @@ public abstract class Pagamento implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -44,13 +44,17 @@ public abstract class Pagamento implements Serializable {
     }
 
 
-    @OneToOne(mappedBy = "pagamento", cascade = CascadeType.ALL)
+    @OneToOne
+    @JsonBackReference
+    @JoinColumn(name = "pedido_id")
+    @MapsId
     public Pedido getPedido() {
         return pedido;
     }
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+        pedido.setPagamento(this);
     }
 
     @Override
@@ -64,5 +68,14 @@ public abstract class Pagamento implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Pagamento{" +
+                "id=" + id +
+                ", estado=" + estado +
+                ", pedido=" + pedido.getId() +
+                '}';
     }
 }

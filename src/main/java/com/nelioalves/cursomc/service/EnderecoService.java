@@ -12,8 +12,13 @@ import java.util.List;
 @Service
 public class EnderecoService implements CrudServiceInteface<Endereco, Integer> {
 
-    @Autowired
+    final
     EnderecoRepository repo;
+
+    @Autowired
+    public EnderecoService(EnderecoRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public Endereco salvar(Endereco endereco) {

@@ -44,7 +44,7 @@ public class Categoria implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
     @JsonManagedReference
     @ManyToMany(mappedBy = "categorias")
     public List<Produto> getProdutos() {
@@ -54,7 +54,6 @@ public class Categoria implements Serializable {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
-
 
     @Override
     public boolean equals(Object o) {

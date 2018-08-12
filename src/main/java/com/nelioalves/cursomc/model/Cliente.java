@@ -91,6 +91,7 @@ public class Cliente implements Serializable {
 
     @ElementCollection
     @CollectionTable(name = "telefone")
+    @Column(name = "telefone")
     public Set<String> getTelefones() {
         return telefones;
     }
@@ -119,5 +120,20 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", inscricaoFederal='" + inscricaoFederal + '\'' +
+                ", tipo=" + tipo +
+                ", enderecos=" + enderecos +
+                ", telefones=" + telefones +
+                ", pedidos=" + pedidos +
+                '}';
     }
 }

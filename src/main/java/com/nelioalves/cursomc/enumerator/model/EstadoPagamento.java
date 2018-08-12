@@ -5,7 +5,7 @@ public enum EstadoPagamento {
     QUITADO("Quitado"),
     CANCELADO("Cancelado");
 
-    private String descricao;
+    private final String descricao;
 
     EstadoPagamento(String descricao) {
         this.descricao = descricao;

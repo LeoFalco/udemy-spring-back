@@ -4,14 +4,14 @@ import java.util.List;
 
 public interface CrudServiceInteface<T, I> {
 
-    public T salvar(T t);
+    T salvar(T t);
 
-    public List<T> listar();
+    List<T> listar();
 
-    public T get(I i);
+    T get(I i);
 
-    public void remover(T t);
+    void remover(T t);
 
-    public void atualizar(T t);
+    void atualizar(T t);
 
 }

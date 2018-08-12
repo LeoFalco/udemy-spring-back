@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class CidadeService implements CrudServiceInteface<Cidade, Integer> {
 
+    private final CidadeRepository repo;
+
     @Autowired
-    private CidadeRepository repo;
+    public CidadeService(CidadeRepository repo) {
+        this.repo = repo;
+    }
 
 
     @Override

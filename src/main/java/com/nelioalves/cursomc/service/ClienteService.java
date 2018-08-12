@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class ClienteService implements CrudServiceInteface<Cliente, Integer> {
 
+    final ClienteRepository repo;
+
     @Autowired
-    ClienteRepository repo;
+    public ClienteService(ClienteRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public Cliente salvar(Cliente cliente) {

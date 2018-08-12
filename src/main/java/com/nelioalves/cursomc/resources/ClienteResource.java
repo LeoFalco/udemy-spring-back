@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/clientes")
 public class ClienteResource {
 
+    final ClienteService clienteService;
+
     @Autowired
-    ClienteService clienteService;
+    public ClienteResource(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
 
 
     @RequestMapping(method = RequestMethod.GET)

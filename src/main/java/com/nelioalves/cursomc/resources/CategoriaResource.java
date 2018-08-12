@@ -14,8 +14,13 @@ import java.util.List;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    @Autowired
+    final
     CategoriaService service;
+
+    @Autowired
+    public CategoriaResource(CategoriaService service) {
+        this.service = service;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Categoria> listar() {

@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProdutoService {
 
-    @Autowired
-    ProdutoRepository repo;
+    final ProdutoRepository repo;
 
+    @Autowired
+    public ProdutoService(ProdutoRepository repo) {
+        this.repo = repo;
+    }
 }

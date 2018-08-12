@@ -7,14 +7,17 @@ import com.nelioalves.cursomc.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
 @Service
 public class CategoriaService implements CrudServiceInteface<Categoria, Integer> {
 
+    final CategoriaRepository repo;
+
     @Autowired
-    CategoriaRepository repo;
+    public CategoriaService(CategoriaRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public Categoria salvar(Categoria categoria) {
