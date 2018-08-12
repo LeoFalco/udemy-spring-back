@@ -26,7 +26,6 @@ public class ResourceExeptionHandler {
         return ResourceExeptionHandler.buildError(HttpStatus.ALREADY_REPORTED, e, request);
     }
 
-
     private static ResponseEntity<StandardError> buildError(HttpStatus status, RuntimeException ex, HttpServletRequest request) {
         StandardError error = new StandardError(status, ex, request.getRequestURI());
         return ResponseEntity.status(status.value()).body(error);
