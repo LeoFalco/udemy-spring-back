@@ -6,6 +6,9 @@ import com.nelioalves.cursomc.model.Categoria;
 import com.nelioalves.cursomc.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,6 +57,11 @@ public class CategoriaService implements CrudServiceInteface<Categoria, Integer>
         existe.toString();
 
         return repo.save(categoria);
+    }
+
+    public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        return repo.findAll(
+                PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy));
     }
 
 }
