@@ -1,10 +1,11 @@
 package com.nelioalves.cursomc.service;
 
-import com.nelioalves.cursomc.exeptions.OperationNotSupertedYetException;
+import com.nelioalves.cursomc.exeptions.RelacionamentoException;
 import com.nelioalves.cursomc.interfaces.CrudServiceInteface;
 import com.nelioalves.cursomc.model.Categoria;
 import com.nelioalves.cursomc.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,17 +32,28 @@ public class CategoriaService implements CrudServiceInteface<Categoria, Integer>
 
     @Override
     public Categoria get(Integer integer) {
-        return repo.getOne(integer);
+        Categoria one = repo.getOne(integer);
+        one.toString();
+        return one;
     }
 
     @Override
-    public void remover(Categoria categoria) {
-        throw new OperationNotSupertedYetException();
+    public void remover(Integer id) {
+        Categoria categoria = get(id);
+        try {
+            repo.delete(categoria);
+        } catch (DataIntegrityViolationException ex) {
+            throw new RelacionamentoException();
+        }
     }
 
     @Override
     public Categoria atualizar(Categoria categoria) {
-        throw new OperationNotSupertedYetException();
+        Categoria existe = get(categoria.getId());
+
+        existe.toString();
+
+        return repo.save(categoria);
     }
 
 }

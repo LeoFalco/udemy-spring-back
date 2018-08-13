@@ -10,7 +10,7 @@ public interface CrudServiceInteface<T, I> {
 
     T get(I i);
 
-    void remover(T t);
+    void remover(I i);
 
     T atualizar(T t);
 

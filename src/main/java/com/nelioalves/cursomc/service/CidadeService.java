@@ -32,12 +32,14 @@ public class CidadeService implements CrudServiceInteface<Cidade, Integer> {
 
     @Override
     public Cidade get(Integer integer) {
-        return repo.getOne(integer);
+        Cidade one = repo.getOne(integer);
+        one.toString();
+        return one;
     }
 
     @Override
-    public void remover(Cidade cidade) {
-        repo.delete(cidade);
+    public void remover(Integer id) {
+        repo.delete(get(id));
     }
 
     @Override

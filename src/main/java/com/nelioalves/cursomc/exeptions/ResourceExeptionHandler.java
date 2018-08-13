@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,13 @@ public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
                 .map(violation -> violation.getPropertyPath() + " " + violation.getMessage())
                 .collect(Collectors.toList());
 
-        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), messages);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < messages.size() - 1; i++) {
+            builder.append(messages.get(i)).append(", ");
+        }
+        builder.append(messages.get(messages.size() - 1));
+
+        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), builder.toString());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -43,14 +49,26 @@ public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(status.value()).body(error);
     }
 
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<StandardError> handleDataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
 
-        List<String> messages = Collections.singletonList(e.getMostSpecificCause().getMessage());
+        String message = e.getMostSpecificCause().getMessage();
 
-
-        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), messages);
+        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), message);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<StandardError> handleEntityNotFoundException(EntityNotFoundException e, HttpServletRequest request) {
+        return ResourceExeptionHandler.buildError(HttpStatus.NOT_FOUND, e, request);
+    }
+
+    @ExceptionHandler(RelacionamentoException.class)
+    public ResponseEntity<StandardError> handleRelacionamentoException(RelacionamentoException e, HttpServletRequest request) {
+        return ResourceExeptionHandler.buildError(HttpStatus.BAD_REQUEST, e, request);
+    }
+
 }

@@ -31,12 +31,14 @@ public class EstadoService implements CrudServiceInteface<Estado, String> {
 
     @Override
     public Estado get(String s) {
-        return repo.getOne(s);
+        Estado one = repo.getOne(s);
+        one.toString();
+        return one;
     }
 
     @Override
-    public void remover(Estado estado) {
-        repo.delete(estado);
+    public void remover(String id) {
+        repo.delete(get(id));
     }
 
     @Override

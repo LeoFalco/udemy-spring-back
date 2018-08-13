@@ -31,12 +31,14 @@ public class PedidoService implements CrudServiceInteface<Pedido, Integer> {
 
     @Override
     public Pedido get(Integer integer) {
-        return repo.getOne(integer);
+        Pedido one = repo.getOne(integer);
+        one.toString();
+        return one;
     }
 
     @Override
-    public void remover(Pedido pedido) {
-        repo.delete(pedido);
+    public void remover(Integer id) {
+        repo.delete(get(id));
     }
 
     @Override

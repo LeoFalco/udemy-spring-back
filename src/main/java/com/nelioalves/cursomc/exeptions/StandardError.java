@@ -4,15 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 
 
 public class StandardError implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String error;
-    private List<String> message;
+    private String message;
     private Integer status;
     private String path;
 
@@ -21,14 +19,14 @@ public class StandardError implements Serializable {
 
     public StandardError(HttpStatus status, Exception ex, String path) {
         this.error = ex.getClass().getSimpleName();
-        this.message = Collections.singletonList(ex.getMessage());
+        this.message = ex.getMessage();
         this.status = status.value();
         this.path = path;
     }
 
-    public StandardError(HttpStatus status, Exception ex, String path, List<String> messages) {
+    public StandardError(HttpStatus status, Exception ex, String path, String message) {
         this.error = ex.getClass().getSimpleName();
-        this.message = messages;
+        this.message = message;
         this.status = status.value();
         this.path = path;
     }
@@ -45,11 +43,11 @@ public class StandardError implements Serializable {
         this.error = error;
     }
 
-    public List<String> getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(List<String> message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

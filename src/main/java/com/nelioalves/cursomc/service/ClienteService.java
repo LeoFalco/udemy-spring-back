@@ -31,11 +31,13 @@ public class ClienteService implements CrudServiceInteface<Cliente, Integer> {
 
     @Override
     public Cliente get(Integer integer) {
-        return repo.getOne(integer);
+        Cliente one = repo.getOne(integer);
+        one.toString();
+        return one;
     }
 
     @Override
-    public void remover(Cliente cliente) {
+    public void remover(Integer id) {
         throw new OperationNotSupertedYetException();
     }
 

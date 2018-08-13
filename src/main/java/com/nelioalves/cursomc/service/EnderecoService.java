@@ -22,7 +22,8 @@ public class EnderecoService implements CrudServiceInteface<Endereco, Integer> {
 
     @Override
     public Endereco salvar(Endereco endereco) {
-        return repo.save(endereco);
+        Endereco save = repo.save(endereco);
+        return save;
     }
 
     @Override
@@ -32,12 +33,14 @@ public class EnderecoService implements CrudServiceInteface<Endereco, Integer> {
 
     @Override
     public Endereco get(Integer integer) {
-        return repo.getOne(integer);
+        Endereco one = repo.getOne(integer);
+        one.toString();
+        return one;
     }
 
     @Override
-    public void remover(Endereco endereco) {
-        repo.delete(endereco);
+    public void remover(Integer id) {
+        repo.delete(get(id));
     }
 
     @Override
