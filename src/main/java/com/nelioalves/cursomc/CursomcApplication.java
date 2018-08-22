@@ -23,7 +23,6 @@ public class CursomcApplication implements CommandLineRunner {
     private final CidadeRepository cidadeRepository;
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
-    private final PedidoRepository pedidoRepository;
     private final PagamentoRepository pagamentoRepository;
     private final ItemPedidoRepository itemPedidoRepository;
 
@@ -43,7 +42,6 @@ public class CursomcApplication implements CommandLineRunner {
         this.cidadeRepository = cidadeRepository;
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
-        this.pedidoRepository = pedidoRepository;
         this.pagamentoRepository = pagamentoRepository;
         this.itemPedidoRepository = itemPedidoRepository;
     }

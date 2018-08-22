@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
-
-    private static final Logger logger = Logger.getLogger(CategoriaResource.class.getName());
 
     final CategoriaService service;
 

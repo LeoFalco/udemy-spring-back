@@ -1,6 +1,8 @@
 package com.nelioalves.cursomc.exeptions;
 
 public class OperationNotSupertedYetException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
 
     public OperationNotSupertedYetException() {
         super("Operação ainda não implementada");

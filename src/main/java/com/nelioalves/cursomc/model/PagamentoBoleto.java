@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 public class PagamentoBoleto extends Pagamento {
-    private static final long serialversionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private Date dataPagamento;
     private Date dataVencimento;

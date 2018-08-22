@@ -1,6 +1,8 @@
 package com.nelioalves.cursomc.exeptions;
 
 public class RelacionamentoException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
 
     public RelacionamentoException() {
         this("O objeto está sendo usado em um relacionamento");
