@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.*;
 
@@ -46,6 +49,8 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
+    @NotBlank
+    @Column(unique = true)
     public String getNome() {
         return nome;
     }
@@ -54,6 +59,9 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
+    @NotBlank
+    @Email
+    @Column(unique = true)
     public String getEmail() {
         return email;
     }
@@ -62,6 +70,8 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
+    @NotBlank
+    @Column(unique = true)
     public String getInscricaoFederal() {
         return inscricaoFederal;
     }
@@ -70,6 +80,7 @@ public class Cliente implements Serializable {
         this.inscricaoFederal = inscricaoFederal;
     }
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     public TipoCliente getTipo() {
         return tipo;

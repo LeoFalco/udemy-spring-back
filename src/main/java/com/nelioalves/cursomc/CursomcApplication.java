@@ -4,15 +4,19 @@ import com.nelioalves.cursomc.model.*;
 import com.nelioalves.cursomc.model.enumerador.EstadoPagamento;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
 import com.nelioalves.cursomc.repository.*;
+import com.nelioalves.cursomc.util.Dates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
@@ -52,6 +56,27 @@ public class CursomcApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
+        Properties properties = new Properties();
+
+        InputStream resourceAsStream = CursomcApplication.class.getResourceAsStream("/application.properties");
+
+        try {
+            properties.load(resourceAsStream);
+        } catch (IOException ignore) {
+        }
+
+        String property = properties.getProperty("spring.jpa.hibernate.ddl-auto");
+
+
+        boolean continuar = property.contains("create");
+
+        if(!continuar){
+            return;
+
+        }
+        System.out.println("continuar");
+
 
 
         Categoria cat1 = new Categoria(null, "Informática");

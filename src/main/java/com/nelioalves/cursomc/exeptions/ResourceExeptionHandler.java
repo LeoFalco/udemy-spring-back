@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,9 +54,14 @@ public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<StandardError> handleDataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
 
-        String message = e.getMostSpecificCause().getMessage();
+        final String[] message = {e.getMostSpecificCause().getMessage()};
 
-        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), message);
+        // deixando excessao com mensagem mais amigável
+        Arrays.stream(message[0].split(" for key")).findFirst().ifPresent(s -> {
+            message[0] = s;
+        });
+
+        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), message[0]);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -63,7 +69,13 @@ public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<StandardError> handleEntityNotFoundException(EntityNotFoundException e, HttpServletRequest request) {
-        return ResourceExeptionHandler.buildError(HttpStatus.NOT_FOUND, e, request);
+
+        HttpStatus badRequest = HttpStatus.ALREADY_REPORTED;
+
+        String message = e.getMessage().replace("com.nelioalves.cursomc.model.", "");
+
+        StandardError error = new StandardError(badRequest, e, request.getRequestURI(), message);
+        return ResponseEntity.status(badRequest).body(error);
     }
 
     @ExceptionHandler(RelacionamentoException.class)

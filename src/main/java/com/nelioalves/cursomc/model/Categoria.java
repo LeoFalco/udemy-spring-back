@@ -47,7 +47,7 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    @ManyToMany(mappedBy = "categorias")
+    @ManyToMany(mappedBy = "categorias", fetch = FetchType.LAZY)
     public List<Produto> getProdutos() {
         return produtos;
     }

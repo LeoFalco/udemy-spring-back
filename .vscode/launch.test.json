@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "cursomc",
+                "projectName": "cursomc",
+                "workingDirectory": "/home/leo/projetos/udemy-spring-back",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "cursomc",
+                "projectName": "cursomc",
+                "workingDirectory": "/home/leo/projetos/udemy-spring-back",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

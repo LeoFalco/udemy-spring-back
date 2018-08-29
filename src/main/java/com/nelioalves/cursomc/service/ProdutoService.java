@@ -1,4 +1,4 @@
-package com.nelioalves.cursomc.resources;
+package com.nelioalves.cursomc.service;
 
 import com.nelioalves.cursomc.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

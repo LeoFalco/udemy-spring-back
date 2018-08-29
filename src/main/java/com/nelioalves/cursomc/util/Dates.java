@@ -1,4 +1,4 @@
-package com.nelioalves.cursomc;
+package com.nelioalves.cursomc.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

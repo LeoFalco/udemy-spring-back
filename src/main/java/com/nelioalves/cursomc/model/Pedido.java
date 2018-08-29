@@ -61,7 +61,7 @@ public class Pedido implements Serializable {
         this.pagamento = pagamento;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
     public Cliente getCliente() {
         return cliente;

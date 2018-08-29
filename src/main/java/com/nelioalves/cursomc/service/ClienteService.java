@@ -21,7 +21,7 @@ public class ClienteService implements CrudServiceInteface<Cliente, Integer> {
 
     @Override
     public Cliente salvar(Cliente cliente) {
-        throw new OperationNotSupertedYetException();
+        return repo.save(cliente);
     }
 
     @Override

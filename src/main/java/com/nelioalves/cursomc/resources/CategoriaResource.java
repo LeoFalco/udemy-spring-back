@@ -25,9 +25,11 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<CategoriaDto> listar() {
+    public List<Categoria> listar() {
+
+        // ignora produtos
         return service.listar().stream()
-                .map(CategoriaDto::new)
+                .peek(categoria -> categoria.setProdutos(null))
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +37,6 @@ public class CategoriaResource {
     public Categoria get(@PathVariable("id") Integer id) {
 
         Categoria categoria = service.get(id);
-
 
         return categoria;
     }
