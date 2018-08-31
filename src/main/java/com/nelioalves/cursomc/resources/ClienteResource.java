@@ -1,5 +1,6 @@
 package com.nelioalves.cursomc.resources;
 
+import com.nelioalves.cursomc.exeptions.IdNotNullExeption;
 import com.nelioalves.cursomc.model.Cliente;
 import com.nelioalves.cursomc.model.Pedido;
 import com.nelioalves.cursomc.model.enumerador.EstadoPagamento;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
@@ -60,22 +62,32 @@ public class ClienteResource {
         return collect;
     }
 
-    //post
-    //cria ou atualiza cliente
+    //cria cliente
     @RequestMapping(method = RequestMethod.POST)
-    private ResponseEntity<Cliente> post(@RequestBody Cliente cliente) {
+    private ResponseEntity<Cliente> post(@Valid @RequestBody Cliente cliente) {
 
-        Cliente clienteManaged = clienteService.salvar(cliente);
+        if (cliente.getId() != null)
+            throw new IdNotNullExeption();
 
-        if (cliente.getId() == null) { // cria
-            URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(clienteManaged.getId())
-                    .toUri();
-            return ResponseEntity.created(uri).body(clienteManaged);
-        } else { // atualiza
-            return ResponseEntity.ok(clienteManaged);
-        }
+        cliente = clienteService.salvar(cliente);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(cliente.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(cliente);
+    }
+
+
+    //atualiza cliente
+    @RequestMapping(method = RequestMethod.POST, path = "/{id}")
+    private ResponseEntity<Cliente> put(@Valid @RequestBody Cliente cliente, @PathVariable("id") Integer id) {
+
+        cliente.setId(id);
+        cliente = clienteService.salvar(cliente);
+
+        return ResponseEntity.ok(cliente);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.nelioalves.cursomc.resources;
 
-import com.nelioalves.cursomc.dto.CategoriaDto;
+import com.nelioalves.cursomc.exeptions.IdNotNullExeption;
 import com.nelioalves.cursomc.model.Categoria;
 import com.nelioalves.cursomc.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +43,11 @@ public class CategoriaResource {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Categoria> post(@RequestBody Categoria categoria) {
+
+        if (categoria.getId() != null) {
+            throw new IdNotNullExeption();
+        }
+
         categoria = service.salvar(categoria);
 
         String uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -73,13 +78,13 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/page")
-    public ResponseEntity<Page<CategoriaDto>> findPage(
+    public ResponseEntity<Page<Categoria>> findPage(
             @RequestParam(defaultValue = "0", name = "pagina", required = false) Integer pagina,
             @RequestParam(defaultValue = "24", name = "linesPerPage", required = false) Integer linesPerPage,
             @RequestParam(defaultValue = "nome", name = "orderBy", required = false) String orderBy,
             @RequestParam(defaultValue = "ASC", name = "direction", required = false) String direction) {
 
-        return ResponseEntity.ok().body(service.findPage(pagina, linesPerPage, orderBy, direction).map(CategoriaDto::new));
+        return ResponseEntity.ok().body(service.findPage(pagina, linesPerPage, orderBy, direction).map(categoria -> categoria));
     }
 
 }

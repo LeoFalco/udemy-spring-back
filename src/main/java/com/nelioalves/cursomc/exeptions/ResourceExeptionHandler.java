@@ -1,10 +1,13 @@
 package com.nelioalves.cursomc.exeptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
@@ -40,13 +43,24 @@ public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
         }
         builder.append(messages.get(messages.size() - 1));
 
-        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), builder.toString());
+        StandardError error = new StandardError();
+
+        error.setError(e.getClass().getSimpleName());
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     private static ResponseEntity<StandardError> buildError(HttpStatus status, RuntimeException ex, HttpServletRequest request) {
-        StandardError error = new StandardError(status, ex, request.getRequestURI());
+        StandardError error = new StandardError();
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setPath(request.getRequestURI());
+        error.setMessage(ex.getMessage());
+        error.setError(ex.getClass().getSimpleName());
+
         return ResponseEntity.status(status.value()).body(error);
     }
 
@@ -54,14 +68,22 @@ public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<StandardError> handleDataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
 
-        final String[] message = {e.getMostSpecificCause().getMessage()};
 
         // deixando excessao com mensagem mais amigável
-        Arrays.stream(message[0].split(" for key")).findFirst().ifPresent(s -> {
-            message[0] = s;
-        });
+        String message = Arrays.stream(e.getMostSpecificCause()
+                .getMessage()
+                .split(" for key"))
+                .findFirst()
+                .orElse(e.getMostSpecificCause().getMessage());
 
-        StandardError error = new StandardError(HttpStatus.BAD_REQUEST, e, request.getRequestURI(), message[0]);
+
+        StandardError error = new StandardError();
+
+        error.setError(e.getClass().getSimpleName());
+        error.setPath(request.getRequestURI());
+        error.setMessage(message);
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
@@ -70,17 +92,46 @@ public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<StandardError> handleEntityNotFoundException(EntityNotFoundException e, HttpServletRequest request) {
 
-        HttpStatus badRequest = HttpStatus.ALREADY_REPORTED;
-
         String message = e.getMessage().replace("com.nelioalves.cursomc.model.", "");
 
-        StandardError error = new StandardError(badRequest, e, request.getRequestURI(), message);
-        return ResponseEntity.status(badRequest).body(error);
+        StandardError error = new StandardError();
+        error.setError(e.getClass().getSimpleName());
+        error.setPath(request.getRequestURI());
+        error.setMessage(message);
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(RelacionamentoException.class)
     public ResponseEntity<StandardError> handleRelacionamentoException(RelacionamentoException e, HttpServletRequest request) {
         return ResourceExeptionHandler.buildError(HttpStatus.BAD_REQUEST, e, request);
     }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        ValidationError error = new ValidationError();
+
+        e.getBindingResult().getFieldErrors().forEach(fieldError -> {
+            error.addError(fieldError.getField(), fieldError.getDefaultMessage(), fieldError.getRejectedValue());
+        });
+
+        error.setError(e.getClass().getSimpleName());
+        error.setPath(request.getContextPath());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(IdNotNullExeption.class)
+    public ResponseEntity<StandardError> handleIdNotNullExeption(IdNotNullExeption e, HttpServletRequest request) {
+
+        StandardError error = new StandardError();
+        error.setError(e.getClass().getSimpleName());
+        error.setPath(request.getRequestURI());
+        error.setMessage(e.getMessage());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
 
 }

@@ -1,7 +1,6 @@
 package com.nelioalves.cursomc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.nelioalves.cursomc.dto.CategoriaDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -77,8 +76,4 @@ public class Categoria implements Serializable {
                 '}';
     }
 
-    @Transient
-    public CategoriaDto toDto() {
-        return new CategoriaDto(this.getId(), this.getNome());
-    }
 }

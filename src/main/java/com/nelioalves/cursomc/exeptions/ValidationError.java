@@ -1,16 +1,16 @@
 package com.nelioalves.cursomc.exeptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-
-public class StandardError implements Serializable {
+public class ValidationError implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String error;
-    private String message;
+    private List<FieldMessage> messages = new ArrayList<>();
     private Integer status;
     private String path;
 
@@ -18,18 +18,7 @@ public class StandardError implements Serializable {
     private Long timestamp = System.currentTimeMillis();
 
 
-    public StandardError(String error, String message, Integer status, String path) {
-        this.error = error;
-        this.message = message;
-        this.status = status;
-        this.path = path;
-    }
-
-    public StandardError() {
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public ValidationError() {
     }
 
     public String getError() {
@@ -40,12 +29,12 @@ public class StandardError implements Serializable {
         this.error = error;
     }
 
-    public String getMessage() {
-        return message;
+    public List<FieldMessage> getMessages() {
+        return messages;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessages(List<FieldMessage> messages) {
+        this.messages = messages;
     }
 
     public Integer getStatus() {
@@ -72,14 +61,7 @@ public class StandardError implements Serializable {
         this.timestamp = timestamp;
     }
 
-    @Override
-    public String toString() {
-        return "StandardError{" +
-                "error='" + error + '\'' +
-                ", message='" + message + '\'' +
-                ", status='" + status + '\'' +
-                ", path='" + path + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
+    public <T> void addError(String field, String message, T rejectedValue) {
+        messages.add(new FieldMessage(field, message, rejectedValue));
     }
 }

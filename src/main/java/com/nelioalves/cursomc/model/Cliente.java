@@ -3,10 +3,11 @@ package com.nelioalves.cursomc.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nelioalves.cursomc.model.enumerador.TipoCliente;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.*;
@@ -49,7 +50,7 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    @NotBlank
+    @Length(min = 2, max = 50, message = "o nome precisa ter entre 2 e 50 caracteres")
     @Column(unique = true)
     public String getNome() {
         return nome;
@@ -59,7 +60,6 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    @NotBlank
     @Email
     @Column(unique = true)
     public String getEmail() {
@@ -70,7 +70,7 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
-    @NotBlank
+    @CPF
     @Column(unique = true)
     public String getInscricaoFederal() {
         return inscricaoFederal;
@@ -132,7 +132,6 @@ public class Cliente implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 
     @Override
     public String toString() {

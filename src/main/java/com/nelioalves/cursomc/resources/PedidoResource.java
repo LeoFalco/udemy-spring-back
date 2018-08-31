@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -23,7 +24,10 @@ public class PedidoResource {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Pedido> listar() {
-        return pedidoService.listar();
+
+        return pedidoService.listar().stream().peek(pedido -> {
+            pedido.getCliente().setEnderecos(null);
+        }).collect(Collectors.toList());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
