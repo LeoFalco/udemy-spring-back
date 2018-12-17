@@ -9,13 +9,12 @@
 	<packaging>jar</packaging>
 
 	<name>cursomc</name>
-	<description>Curso Spring Boot Professor Nelio Alves</description>
+	<description>Curso Spring Boot Leonardo Jesus Falco</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
