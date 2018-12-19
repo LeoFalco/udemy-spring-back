@@ -1,6 +1,8 @@
 package com.github.leofalco.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.leofalco.model.pedido.ItemPedido;
+import com.github.leofalco.model.pedido.Pedido;
 
 import javax.persistence.*;
 import java.io.Serializable;

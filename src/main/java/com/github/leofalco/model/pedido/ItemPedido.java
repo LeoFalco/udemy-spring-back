@@ -1,6 +1,7 @@
-package com.github.leofalco.model;
+package com.github.leofalco.model.pedido;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.leofalco.model.Produto;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

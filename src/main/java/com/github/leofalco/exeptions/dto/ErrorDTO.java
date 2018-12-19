@@ -1,4 +1,4 @@
-package com.github.leofalco.exeptions;
+package com.github.leofalco.exeptions.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;

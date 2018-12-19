@@ -1,6 +1,6 @@
 package com.github.leofalco.repository;
 
-import com.github.leofalco.model.Endereco;
+import com.github.leofalco.model.endereco.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

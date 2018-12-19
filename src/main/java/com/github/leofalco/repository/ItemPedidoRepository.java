@@ -1,6 +1,6 @@
 package com.github.leofalco.repository;
 
-import com.github.leofalco.model.ItemPedido;
+import com.github.leofalco.model.pedido.ItemPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

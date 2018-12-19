@@ -1,7 +1,10 @@
-package com.github.leofalco.model;
+package com.github.leofalco.model.pedido;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.github.leofalco.model.Cliente;
+import com.github.leofalco.model.pagamento.Pagamento;
+import com.github.leofalco.model.endereco.Endereco;
 
 import javax.persistence.*;
 import java.io.Serializable;

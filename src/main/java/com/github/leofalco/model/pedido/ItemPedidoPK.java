@@ -1,4 +1,6 @@
-package com.github.leofalco.model;
+package com.github.leofalco.model.pedido;
+
+import com.github.leofalco.model.Produto;
 
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;

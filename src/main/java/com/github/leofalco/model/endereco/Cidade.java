@@ -1,4 +1,4 @@
-package com.github.leofalco.model;
+package com.github.leofalco.model.endereco;
 
 import com.github.leofalco.Entidade;
 import lombok.AllArgsConstructor;

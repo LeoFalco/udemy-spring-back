@@ -1,6 +1,7 @@
-package com.github.leofalco.model;
+package com.github.leofalco.model.pagamento;
 
 import com.github.leofalco.model.enumerador.EstadoPagamento;
+import com.github.leofalco.model.pedido.Pedido;
 
 import javax.persistence.Entity;
 

@@ -1,5 +1,11 @@
 package com.github.leofalco.exeptions;
 
+import com.github.leofalco.exeptions.custom.IdNotNullExeption;
+import com.github.leofalco.exeptions.custom.ObjectAlreadyExistsException;
+import com.github.leofalco.exeptions.custom.OperationNotSupertedYetException;
+import com.github.leofalco.exeptions.custom.RelacionamentoException;
+import com.github.leofalco.exeptions.dto.ErrorDTO;
+import com.github.leofalco.exeptions.dto.FieldErrorMessage;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

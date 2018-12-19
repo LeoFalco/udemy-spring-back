@@ -2,7 +2,7 @@ package com.github.leofalco.interfaces;
 
 import java.util.List;
 
-public interface CrudServiceInteface<T, I> {
+public interface CrudServiceInterface<T, I> {
 
     T salvar(T t);
 

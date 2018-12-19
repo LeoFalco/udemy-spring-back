@@ -1,7 +1,7 @@
 package com.github.leofalco.service;
 
-import com.github.leofalco.exeptions.RelacionamentoException;
-import com.github.leofalco.interfaces.CrudServiceInteface;
+import com.github.leofalco.exeptions.custom.RelacionamentoException;
+import com.github.leofalco.interfaces.CrudServiceInterface;
 import com.github.leofalco.model.Categoria;
 import com.github.leofalco.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoriaService implements CrudServiceInteface<Categoria, Long> {
+public class CategoriaService implements CrudServiceInterface<Categoria, Long> {
 
     final CategoriaRepository repo;
 

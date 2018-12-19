@@ -1,6 +1,7 @@
-package com.github.leofalco.model;
+package com.github.leofalco.model.endereco;
 
 import com.github.leofalco.Entidade;
+import com.github.leofalco.model.Cliente;
 import lombok.*;
 
 import javax.persistence.*;

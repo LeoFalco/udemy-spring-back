@@ -1,4 +1,4 @@
-package com.github.leofalco.model;
+package com.github.leofalco.model.endereco;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.leofalco.Entidade;

@@ -1,7 +1,7 @@
 package com.github.leofalco.service;
 
-import com.github.leofalco.exeptions.OperationNotSupertedYetException;
-import com.github.leofalco.interfaces.CrudServiceInteface;
+import com.github.leofalco.exeptions.custom.OperationNotSupertedYetException;
+import com.github.leofalco.interfaces.CrudServiceInterface;
 import com.github.leofalco.model.Cliente;
 import com.github.leofalco.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ClienteService implements CrudServiceInteface<Cliente, Integer> {
+public class ClienteService implements CrudServiceInterface<Cliente, Integer> {
 
     final ClienteRepository repo;
 

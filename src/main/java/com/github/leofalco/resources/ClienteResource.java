@@ -1,8 +1,8 @@
 package com.github.leofalco.resources;
 
-import com.github.leofalco.exeptions.IdNotNullExeption;
+import com.github.leofalco.exeptions.custom.IdNotNullExeption;
 import com.github.leofalco.model.Cliente;
-import com.github.leofalco.model.Pedido;
+import com.github.leofalco.model.pedido.Pedido;
 import com.github.leofalco.model.enumerador.EstadoPagamento;
 import com.github.leofalco.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;

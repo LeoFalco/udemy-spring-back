@@ -1,8 +1,8 @@
 package com.github.leofalco.service;
 
-import com.github.leofalco.exeptions.OperationNotSupertedYetException;
-import com.github.leofalco.interfaces.CrudServiceInteface;
-import com.github.leofalco.model.Endereco;
+import com.github.leofalco.exeptions.custom.OperationNotSupertedYetException;
+import com.github.leofalco.interfaces.CrudServiceInterface;
+import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EnderecoService implements CrudServiceInteface<Endereco, Integer> {
+public class EnderecoService implements CrudServiceInterface<Endereco, Integer> {
 
     final
     EnderecoRepository repo;

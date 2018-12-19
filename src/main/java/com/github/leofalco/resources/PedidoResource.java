@@ -1,6 +1,6 @@
 package com.github.leofalco.resources;
 
-import com.github.leofalco.model.Pedido;
+import com.github.leofalco.model.pedido.Pedido;
 import com.github.leofalco.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

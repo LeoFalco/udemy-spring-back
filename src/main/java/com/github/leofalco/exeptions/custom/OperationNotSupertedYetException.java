@@ -1,4 +1,4 @@
-package com.github.leofalco.exeptions;
+package com.github.leofalco.exeptions.custom;
 
 public class OperationNotSupertedYetException extends RuntimeException {
     private static final long serialVersionUID = 1L;

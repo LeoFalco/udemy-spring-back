@@ -2,7 +2,9 @@ package com.github.leofalco.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.model.enumerador.TipoCliente;
+import com.github.leofalco.model.pedido.Pedido;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
