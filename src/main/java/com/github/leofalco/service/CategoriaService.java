@@ -35,9 +35,7 @@ public class CategoriaService implements CrudServiceInterface<Categoria, Long> {
 
     @Override
     public Categoria get(Long integer) {
-        Categoria one = repo.getOne(integer);
-        one.toString();
-        return one;
+        return repo.getOne(integer);
     }
 
     @Override

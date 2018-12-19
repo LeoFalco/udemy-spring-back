@@ -1,6 +1,8 @@
 package com.github.leofalco;
 
-import com.github.leofalco.model.*;
+import com.github.leofalco.model.Categoria;
+import com.github.leofalco.model.Cliente;
+import com.github.leofalco.model.Produto;
 import com.github.leofalco.model.endereco.Cidade;
 import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.model.endereco.Estado;
@@ -24,6 +26,8 @@ import java.util.List;
 @Service
 public class MockTestDataService {
 
+    private static boolean dadosCarregados = false;
+
     private final CategoriaRepository categoriaRepository;
     private final ProdutoRepository produtoRepository;
     private final EstadoRepository estadoRepository;
@@ -34,7 +38,6 @@ public class MockTestDataService {
     private final ItemPedidoRepository itemPedidoRepository;
     private final PedidoRepository pedidoRepository;
 
-    private static boolean dadosCarregados = false;
 
     @Autowired
     public MockTestDataService(CategoriaRepository categoriaRepository,
@@ -60,11 +63,12 @@ public class MockTestDataService {
     public void mock() {
 
         if (dadosCarregados) {
-            throw new RuntimeException("Dados já foram carregados, os dados podem ser carregados somente uma ves");
-        } else {
-            System.out.println("Carregando instancia dos dados");
+            System.out.println("Dados já foram carregados, os dados podem ser carregados somente uma ves");
+            return;
         }
         dadosCarregados = true;
+
+        System.out.println("Carregando instancia dos dados");
 
         Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
@@ -118,7 +122,6 @@ public class MockTestDataService {
                 sp,
                 new Estado("TO", "Tocantins")
         );
-
 
 
         Cidade uberlandia = new Cidade(null, "Uberlândia", mg);
