@@ -1,14 +1,12 @@
 package com.github.leofalco.exeptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,121 +15,116 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpStatus.*;
+
 @ControllerAdvice
-public class ResourceExeptionHandler extends ResponseEntityExceptionHandler {
+public class ResourceExeptionHandler extends ExceptionHandlerExceptionResolver {
+
+
+    /**
+     * use default exception message
+     *
+     * @param status  http status
+     * @param ex      exception
+     * @param request reques
+     * @return ErrorDTO
+     */
+    private static ResponseEntity<ErrorDTO> buildError(HttpStatus status,
+                                                       RuntimeException ex,
+                                                       HttpServletRequest request) {
+        return buildError(ex.getMessage(), status, ex, request);
+    }
+
+    private static ResponseEntity<ErrorDTO> buildError(String customMessage,
+                                                       HttpStatus status,
+                                                       RuntimeException ex,
+                                                       HttpServletRequest request) {
+        ErrorDTO error = ErrorDTO.builder()
+                .status(status)
+                .path(request.getRequestURI())
+                .message(customMessage)
+                .error(ex.getClass().getSimpleName())
+                .build();
+        return ResponseEntity.status(status).body(error);
+    }
 
     @ExceptionHandler(ObjectAlreadyExistsException.class)
-    public ResponseEntity<StandardError> handleObjectAlreadyExistsExeption(ObjectAlreadyExistsException e, HttpServletRequest request) {
-        return ResourceExeptionHandler.buildError(HttpStatus.ALREADY_REPORTED, e, request);
+    public ResponseEntity<ErrorDTO> handleObjectAlreadyExistsException(ObjectAlreadyExistsException e,
+                                                                       HttpServletRequest request) {
+        return buildError(ALREADY_REPORTED, e, request);
     }
 
     @ExceptionHandler(OperationNotSupertedYetException.class)
-    public ResponseEntity<StandardError> handleOperationNotSupertedYetException(OperationNotSupertedYetException e, HttpServletRequest request) {
-        return ResourceExeptionHandler.buildError(HttpStatus.ALREADY_REPORTED, e, request);
+    public ResponseEntity<ErrorDTO> handleOperationNotSupertedYetException(OperationNotSupertedYetException e,
+                                                                           HttpServletRequest request) {
+        return buildError(ALREADY_REPORTED, e, request);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<StandardError> handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request) {
+    public ResponseEntity<ErrorDTO> handleConstraintViolationException(ConstraintViolationException e,
+                                                                       HttpServletRequest request) {
 
-        List<String> messages = e.getConstraintViolations().stream()
+        String message = e.getConstraintViolations().stream()
                 .map(violation -> violation.getPropertyPath() + " " + violation.getMessage())
-                .collect(Collectors.toList());
+                .collect(Collectors.joining());
 
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < messages.size() - 1; i++) {
-            builder.append(messages.get(i)).append(", ");
-        }
-        builder.append(messages.get(messages.size() - 1));
-
-        StandardError error = new StandardError();
-
-        error.setError(e.getClass().getSimpleName());
-        error.setMessage(e.getMessage());
-        error.setPath(request.getRequestURI());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return buildError(message, BAD_REQUEST, e, request);
     }
-
-    private static ResponseEntity<StandardError> buildError(HttpStatus status, RuntimeException ex, HttpServletRequest request) {
-        StandardError error = new StandardError();
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setPath(request.getRequestURI());
-        error.setMessage(ex.getMessage());
-        error.setError(ex.getClass().getSimpleName());
-
-        return ResponseEntity.status(status.value()).body(error);
-    }
-
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<StandardError> handleDataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
+    public ResponseEntity<ErrorDTO> handleDataIntegrityViolationException(DataIntegrityViolationException e,
+                                                                          HttpServletRequest request) {
 
-
-        // deixando excessao com mensagem mais amigável
+        // deixando excessão com mensagem mais amigável
         String message = Arrays.stream(e.getMostSpecificCause()
                 .getMessage()
                 .split(" for key"))
                 .findFirst()
                 .orElse(e.getMostSpecificCause().getMessage());
 
-
-        StandardError error = new StandardError();
-
-        error.setError(e.getClass().getSimpleName());
-        error.setPath(request.getRequestURI());
-        error.setMessage(message);
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return buildError(message, BAD_REQUEST, e, request);
     }
 
-
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError> handleEntityNotFoundException(EntityNotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<ErrorDTO> handleEntityNotFoundException(EntityNotFoundException e,
+                                                                  HttpServletRequest request) {
 
-        String message = e.getMessage().replace("com.nelioalves.cursomc.model.", "");
+        String message = e.getMessage().replace("com.github.leofalco.model.", "");
 
-        StandardError error = new StandardError();
-        error.setError(e.getClass().getSimpleName());
-        error.setPath(request.getRequestURI());
-        error.setMessage(message);
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return buildError(message, NOT_FOUND, e, request);
     }
 
     @ExceptionHandler(RelacionamentoException.class)
-    public ResponseEntity<StandardError> handleRelacionamentoException(RelacionamentoException e, HttpServletRequest request) {
+    public ResponseEntity<ErrorDTO> handleRelacionamentoException(RelacionamentoException e,
+                                                                  HttpServletRequest request) {
         return ResourceExeptionHandler.buildError(HttpStatus.BAD_REQUEST, e, request);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<ErrorDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
+                                                                    HttpServletRequest request) {
 
-        ValidationError error = new ValidationError();
+        List<FieldErrorMessage> detail = e.getBindingResult().getFieldErrors().stream()
+                .map(fieldError ->
+                        new FieldErrorMessage(fieldError.getField(),
+                                fieldError.getDefaultMessage(),
+                                fieldError.getRejectedValue()))
+                .collect(Collectors.toList());
 
-        e.getBindingResult().getFieldErrors().forEach(fieldError -> {
-            error.addError(fieldError.getField(), fieldError.getDefaultMessage(), fieldError.getRejectedValue());
-        });
+        ErrorDTO error = ErrorDTO.<List<FieldErrorMessage>>builder()
+                .status(BAD_REQUEST)
+                .detalhe(detail)
+                .path(request.getRequestURI())
+                .message("Erro de Validação")
+                .error(e.getClass().getSimpleName())
+                .build();
 
-        error.setError(e.getClass().getSimpleName());
-        error.setPath(request.getContextPath());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.badRequest().body(error);
+
     }
 
     @ExceptionHandler(IdNotNullExeption.class)
-    public ResponseEntity<StandardError> handleIdNotNullExeption(IdNotNullExeption e, HttpServletRequest request) {
-
-        StandardError error = new StandardError();
-        error.setError(e.getClass().getSimpleName());
-        error.setPath(request.getRequestURI());
-        error.setMessage(e.getMessage());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    public ResponseEntity<ErrorDTO> handleIdNotNullExeption(IdNotNullExeption e,
+                                                            HttpServletRequest request) {
+        return buildError(BAD_REQUEST, e, request);
     }
-
-
 }

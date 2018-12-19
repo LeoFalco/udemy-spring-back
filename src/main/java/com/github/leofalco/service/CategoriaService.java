@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoriaService implements CrudServiceInteface<Categoria, Integer> {
+public class CategoriaService implements CrudServiceInteface<Categoria, Long> {
 
     final CategoriaRepository repo;
 
@@ -34,14 +34,14 @@ public class CategoriaService implements CrudServiceInteface<Categoria, Integer>
     }
 
     @Override
-    public Categoria get(Integer integer) {
+    public Categoria get(Long integer) {
         Categoria one = repo.getOne(integer);
         one.toString();
         return one;
     }
 
     @Override
-    public void remover(Integer id) {
+    public void remover(Long id) {
         Categoria categoria = get(id);
         try {
             repo.delete(categoria);

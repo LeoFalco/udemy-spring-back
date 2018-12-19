@@ -71,12 +71,11 @@ public class CursomcApplication implements CommandLineRunner {
 
         boolean continuar = property.contains("create");
 
-        if(!continuar){
+        if (!continuar) {
             return;
 
         }
         System.out.println("continuar");
-
 
 
         Categoria cat1 = new Categoria(null, "Informática");
@@ -153,7 +152,7 @@ public class CursomcApplication implements CommandLineRunner {
         est2.getCidades().addAll(Arrays.asList(c2, c3));
 
 
-        Cliente cli1 = new Cliente(null, "Mario Silva", "maria@gmailcom", "36378912377", TipoCliente.PESSOA_FISICA);
+        Cliente cli1 = new Cliente(null, "Mario Silva", "maria@gmailcom", "46849145851", TipoCliente.PESSOA_FISICA);
         cli1.getTelefones().addAll(Arrays.asList("1254778914", "458799641"));
 
         Endereco e1 = new Endereco(null, "Rua flores", 300, "apto 203", "jardim jardim", "38220834", c1, cli1);

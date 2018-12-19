@@ -14,7 +14,6 @@ public class ItemPedidoPK implements Serializable {
     private Produto produto;
 
     @ManyToOne
-
     public Pedido getPedido() {
         return pedido;
     }

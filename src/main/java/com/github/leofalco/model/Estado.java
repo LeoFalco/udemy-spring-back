@@ -1,69 +1,42 @@
 package com.github.leofalco.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.leofalco.Entidade;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "estado")
-public class Estado implements Serializable {
+@NoArgsConstructor
+@EqualsAndHashCode
+public class Estado implements Entidade<String> {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @Column(length = 2, columnDefinition = "char(2)")
     private String uf;
+
     private String nome;
+
+    @OneToMany(mappedBy = "estado")
+    @JsonIgnore
     private List<Cidade> cidades = new ArrayList<>();
 
-
-    public Estado() {
+    @Override
+    public String getId() {
+        return uf;
     }
 
     public Estado(String uf, String nome) {
         this.uf = uf;
         this.nome = nome;
-    }
-
-    @Id
-    @Column(length = 2, columnDefinition = "char(2)")
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    @OneToMany(mappedBy = "estado")
-    @JsonIgnore
-    public List<Cidade> getCidades() {
-        return cidades;
-    }
-
-    public void setCidades(List<Cidade> cidades) {
-        this.cidades = cidades;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Estado)) return false;
-        Estado estado = (Estado) o;
-        return Objects.equals(uf, estado.uf);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(uf);
     }
 }

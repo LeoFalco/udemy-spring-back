@@ -10,9 +10,10 @@ public class ValidationError implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String error;
-    private List<FieldMessage> messages = new ArrayList<>();
+    private List<FieldErrorMessage> messages = new ArrayList<>();
     private Integer status;
     private String path;
+
 
     @JsonFormat(pattern = "dd/MM/yyyy hh:mm:SS.ssss")
     private Long timestamp = System.currentTimeMillis();
@@ -29,11 +30,11 @@ public class ValidationError implements Serializable {
         this.error = error;
     }
 
-    public List<FieldMessage> getMessages() {
+    public List<FieldErrorMessage> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<FieldMessage> messages) {
+    public void setMessages(List<FieldErrorMessage> messages) {
         this.messages = messages;
     }
 
@@ -62,6 +63,6 @@ public class ValidationError implements Serializable {
     }
 
     public <T> void addError(String field, String message, T rejectedValue) {
-        messages.add(new FieldMessage(field, message, rejectedValue));
+        messages.add(new FieldErrorMessage(field, message, rejectedValue));
     }
 }

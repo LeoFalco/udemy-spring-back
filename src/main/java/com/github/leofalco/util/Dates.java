@@ -12,7 +12,7 @@ public class Dates {
     private static final String DD_MM_YYYY_HH_MM = "dd/MM/yyyy HH:mm";
 
     public static Date toDate(String data) {
-        return toDate(data, DD_MM_YYYY_HH_MM);
+        return toDate(DD_MM_YYYY_HH_MM, data);
     }
 
     public static Date toDate(String pattern, String data) {
@@ -22,6 +22,7 @@ public class Dates {
             date = new SimpleDateFormat(pattern).parse(data);
         } catch (ParseException ex) {
             logger.log(Level.WARNING, ex.getMessage());
+            ex.printStackTrace();
         }
         return date;
     }

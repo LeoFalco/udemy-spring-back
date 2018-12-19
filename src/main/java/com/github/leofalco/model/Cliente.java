@@ -50,7 +50,7 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    @Length(min = 2, max = 50, message = "o nome precisa ter entre 2 e 50 caracteres")
+    @Length(min = 2, max = 50, message = "o descricao precisa ter entre 2 e 50 caracteres")
     @Column(unique = true)
     public String getNome() {
         return nome;
@@ -82,6 +82,7 @@ public class Cliente implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = TipoCliente.columnDefinition)
     public TipoCliente getTipo() {
         return tipo;
     }
@@ -137,7 +138,7 @@ public class Cliente implements Serializable {
     public String toString() {
         return "Cliente{" +
                 "id=" + id +
-                ", nome='" + nome + '\'' +
+                ", descricao='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 ", inscricaoFederal='" + inscricaoFederal + '\'' +
                 ", tipo=" + tipo +

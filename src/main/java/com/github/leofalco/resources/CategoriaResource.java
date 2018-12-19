@@ -1,5 +1,6 @@
 package com.github.leofalco.resources;
 
+import com.github.leofalco.dto.CategoriaDTO;
 import com.github.leofalco.exeptions.IdNotNullExeption;
 import com.github.leofalco.model.Categoria;
 import com.github.leofalco.service.CategoriaService;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    final CategoriaService service;
+    private final CategoriaService service;
 
     @Autowired
     public CategoriaResource(CategoriaService service) {
@@ -25,24 +26,21 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> listar() {
-
+    public List<CategoriaDTO> listar() {
         // ignora produtos
-        return service.listar().stream()
-                .peek(categoria -> categoria.setProdutos(null))
+        return service.listar()
+                .stream()
+                .map(Categoria::asDTO)
                 .collect(Collectors.toList());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public Categoria get(@PathVariable("id") Integer id) {
-
-        Categoria categoria = service.get(id);
-
-        return categoria;
+    public CategoriaDTO get(@PathVariable("id") Long id) {
+        return service.get(id).asDTO();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Categoria> post(@RequestBody Categoria categoria) {
+    public ResponseEntity<CategoriaDTO> post(@RequestBody Categoria categoria) {
 
         if (categoria.getId() != null) {
             throw new IdNotNullExeption();
@@ -55,22 +53,22 @@ public class CategoriaResource {
                 .buildAndExpand(categoria.getId())
                 .toUri().toString();
 
-
-        return ResponseEntity.status(HttpStatus.CREATED).header("location", uri).body(categoria);
+        return ResponseEntity.status(HttpStatus.CREATED).header("location", uri).body(categoria.asDTO());
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}")
-    public ResponseEntity<Categoria> put(@RequestBody Categoria categoria, @PathVariable Integer id) {
+    public ResponseEntity<CategoriaDTO> put(@RequestBody CategoriaDTO categoriaDTO, @PathVariable Long id) {
 
+        Categoria categoria = categoriaDTO.asEntity();
         categoria.setId(id);
 
         categoria = service.atualizar(categoria);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoria);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoria.asDTO());
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
 
         service.remover(id);
 
@@ -78,13 +76,13 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/page")
-    public ResponseEntity<Page<Categoria>> findPage(
+    public ResponseEntity<Page<CategoriaDTO>> findPage(
             @RequestParam(defaultValue = "0", name = "pagina", required = false) Integer pagina,
             @RequestParam(defaultValue = "24", name = "linesPerPage", required = false) Integer linesPerPage,
-            @RequestParam(defaultValue = "nome", name = "orderBy", required = false) String orderBy,
+            @RequestParam(defaultValue = "descricao", name = "orderBy", required = false) String orderBy,
             @RequestParam(defaultValue = "ASC", name = "direction", required = false) String direction) {
 
-        return ResponseEntity.ok().body(service.findPage(pagina, linesPerPage, orderBy, direction).map(categoria -> categoria));
+        return ResponseEntity.ok().body(service.findPage(pagina, linesPerPage, orderBy, direction).map(Categoria::asDTO));
     }
 
 }

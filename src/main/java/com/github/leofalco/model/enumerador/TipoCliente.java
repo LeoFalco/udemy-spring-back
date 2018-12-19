@@ -1,9 +1,12 @@
 package com.github.leofalco.model.enumerador;
 
 public enum TipoCliente {
-
     PESSOA_FISICA(1, "Pessoa Física"),
     PESSOA_JURIDICA(2, "Pessoa Jurídica");
+
+    public static final String columnDefinition =
+            "enum('PESSOA_FISICA','PESSOA_JURIDICA') not null default('PESSOA_FISICA')";
+
 
     private int cod;
     private String descricao;
@@ -33,7 +36,7 @@ public enum TipoCliente {
             }
         }
 
-        throw new IllegalArgumentException("Id inválido: " + cod);
+        throw new IllegalArgumentException("Código inválido: " + cod);
     }
 
 }
