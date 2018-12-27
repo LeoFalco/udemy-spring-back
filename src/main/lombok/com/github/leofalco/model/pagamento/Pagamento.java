@@ -1,5 +1,6 @@
 package com.github.leofalco.model.pagamento;
 
+import column.Def;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.leofalco.model.enumerador.EstadoPagamento;
 import com.github.leofalco.model.pedido.Pedido;
@@ -21,7 +22,7 @@ public abstract class Pagamento implements Serializable {
     @Id
     private Integer id;
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(columnDefinition = Def.com_github_leofalco_model_enumerador_EstadoPagamento)
     private EstadoPagamento estado;
     @OneToOne
     @JsonIgnore

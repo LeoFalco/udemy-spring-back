@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class CategoriaService implements CrudInterface<Categoria, Long> {
 
-    final CategoriaRepository repo;
+    private final CategoriaRepository repo;
 
     @Autowired
     public CategoriaService(CategoriaRepository repo) {
