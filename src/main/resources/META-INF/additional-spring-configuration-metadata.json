@@ -3,7 +3,7 @@
     {
       "name": "mock-data",
       "type": "java.lang.String",
-      "description": "Insere dados de teste na base de dados caso esta property esteja definida como true",
+      "description": "Insere dados de teste na base de dados caso esta property esteja definida como true.",
       "defaultValue": false
     }
   ]
