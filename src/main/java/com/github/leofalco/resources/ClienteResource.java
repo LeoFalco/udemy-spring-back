@@ -1,5 +1,6 @@
 package com.github.leofalco.resources;
 
+import com.github.leofalco.dto.ClienteDTO;
 import com.github.leofalco.exeptions.custom.IdNotNullExeption;
 import com.github.leofalco.model.Cliente;
 import com.github.leofalco.model.enumerador.EstadoPagamento;
@@ -15,12 +16,13 @@ import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteResource {
 
-    final ClienteService clienteService;
+    private final ClienteService clienteService;
 
     @Autowired
     public ClienteResource(ClienteService clienteService) {
@@ -29,17 +31,9 @@ public class ClienteResource {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    private List<Cliente> listar() {
-
-
+    private List<ClienteDTO> listar() {
         List<Cliente> clientes = clienteService.listar();
-
-        List<Cliente> collect = clientes.stream().peek(cliente -> {
-            cliente.setEnderecos(null);
-            cliente.setTelefones(null);
-        }).collect(Collectors.toList());
-
-        return collect;
+        return clientes.stream().map(Cliente::asDTO).collect(Collectors.toList());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
@@ -82,7 +76,7 @@ public class ClienteResource {
 
     //atualiza cliente
     @RequestMapping(method = RequestMethod.POST, path = "/{id}")
-    private ResponseEntity<Cliente> put(@Valid @RequestBody Cliente cliente, @PathVariable("id") Long id) {
+    private ResponseEntity<Cliente> put(@Valid @RequestBody Cliente cliente, @PathVariable Long id) {
 
         cliente.setId(id);
         cliente = clienteService.salvar(cliente);
