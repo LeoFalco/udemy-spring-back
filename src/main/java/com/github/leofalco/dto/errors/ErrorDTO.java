@@ -21,7 +21,7 @@ public class ErrorDTO implements Serializable {
     private String path;
     private Object detalhe;
 
-    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:SS.ssss")
+    //@JsonFormat(pattern = "dd/MM/yyyy hh:mm:SS.ssss")
     private final LocalDateTime timestamp = LocalDateTime.now();
 
 }
