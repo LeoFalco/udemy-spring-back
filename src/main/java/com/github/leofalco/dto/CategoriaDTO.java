@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CategoriaDTO implements AsEntity<Categoria> {
 
+    private static final long serialVersionUID = -8972499903386833214L;
     private Long id;
     private String descricao;
 

@@ -116,7 +116,7 @@ public class ResourceExeptionHandler extends ExceptionHandlerExceptionResolver {
                                 fieldError.getRejectedValue()))
                 .collect(Collectors.toList());
 
-        ErrorDTO error = ErrorDTO.<List<FieldErrorMessage>>builder()
+        ErrorDTO error = ErrorDTO.builder()
                 .status(BAD_REQUEST)
                 .detalhe(detail)
                 .path(request.getRequestURI())

@@ -1,16 +1,29 @@
 package com.github.leofalco.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.leofalco.model.pedido.ItemPedido;
-import com.github.leofalco.model.pedido.Pedido;
-import lombok.*;
-import lombok.experimental.Accessors;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.leofalco.model.pedido.ItemPedido;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "produto")

@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Estado implements Entidade<String> {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(length = 2, columnDefinition = "char(2)")

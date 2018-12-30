@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ClienteDTO implements AsEntity<Cliente> {
 
+    private static final long serialVersionUID = 5735300954899617083L;
     Long id;
     String nome;
     TipoCliente tipoCliente;

@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 public class EnderecoDTO implements AsEntity<Endereco> {
 
+    private static final long serialVersionUID = -4735676142839964067L;
     private Long id;
     private String logradouro;
     private Integer numero;

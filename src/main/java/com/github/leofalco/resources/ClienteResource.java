@@ -82,7 +82,7 @@ public class ClienteResource {
 
     //atualiza cliente
     @RequestMapping(method = RequestMethod.POST, path = "/{id}")
-    private ResponseEntity<Cliente> put(@Valid @RequestBody Cliente cliente, @PathVariable("id") Integer id) {
+    private ResponseEntity<Cliente> put(@Valid @RequestBody Cliente cliente, @PathVariable("id") Long id) {
 
         cliente.setId(id);
         cliente = clienteService.salvar(cliente);

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Endereco implements Entidade<Long> {
-    private static final long serialVersionUID = 1L;
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
