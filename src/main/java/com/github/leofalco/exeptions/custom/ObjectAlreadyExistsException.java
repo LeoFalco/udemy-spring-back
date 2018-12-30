@@ -11,6 +11,6 @@ public class ObjectAlreadyExistsException extends RuntimeException {
     }
 
     public ObjectAlreadyExistsException(Class<?> tipo, Serializable id) {
-        super("Objeto já existe! Id:" + id + ", Tipo: " + tipo.getName());
+        super("Objeto já existe! PrimaryKey:" + id + ", Tipo: " + tipo.getName());
     }
 }

@@ -1,6 +1,6 @@
 package com.github.leofalco.model.endereco;
 
-import com.github.leofalco.Entidade;
+import com.github.leofalco.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +14,9 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cidade implements Entidade<Long> {
+public class Cidade implements PrimaryKey<Long> {
 
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

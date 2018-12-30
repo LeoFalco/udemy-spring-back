@@ -1,7 +1,7 @@
 package com.github.leofalco.model.endereco;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.leofalco.Entidade;
+import com.github.leofalco.PrimaryKey;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +17,9 @@ import java.util.List;
 @Table(name = "estado")
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Estado implements Entidade<String> {
+public class Estado implements PrimaryKey<String> {
 
-    @Id
+    @javax.persistence.Id
     @Column(length = 2, columnDefinition = "char(2)")
     private String uf;
 

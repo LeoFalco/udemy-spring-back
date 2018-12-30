@@ -1,21 +1,27 @@
 package com.github.leofalco.dto;
 
-import com.github.leofalco.interfaces.AsEntity;
+import com.github.leofalco.interfaces.DataTransfer;
 import com.github.leofalco.model.Cliente;
 import com.github.leofalco.model.enumerador.TipoCliente;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteDTO implements AsEntity<Cliente> {
+public class ClienteDTO implements DataTransfer<ClienteDTO, Cliente> {
 
     private static final long serialVersionUID = 5735300954899617083L;
-    Long id;
-    String nome;
-    TipoCliente tipoCliente;
-    String email;
-    String inscricaoFederal;
-    List<EnderecoDTO> enderecos;
-    List<String> telefones;
+    private Long id;
+    private String nome;
+    private TipoCliente tipoCliente;
+    private String email;
+    private String inscricaoFederal;
+    private List<EnderecoDTO> enderecos = new ArrayList<>();
+    private List<String> telefones = new ArrayList<>();
+
+    @Override
+    public ClienteDTO asDTO() {
+        return this;
+    }
 
     @Override
     public Cliente asEntity() {
@@ -26,9 +32,6 @@ public class ClienteDTO implements AsEntity<Cliente> {
         cliente.setEmail(email);
         cliente.setInscricaoFederal(inscricaoFederal);
         cliente.getTelefones().addAll(telefones);
-
-
-
         return cliente;
     }
 }

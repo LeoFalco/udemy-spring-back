@@ -1,6 +1,6 @@
 package com.github.leofalco.model.endereco;
 
-import com.github.leofalco.Entidade;
+import com.github.leofalco.PrimaryKey;
 import com.github.leofalco.model.Cliente;
 import lombok.*;
 
@@ -11,10 +11,10 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Endereco implements Entidade<Long> {
+public class Endereco implements PrimaryKey<Long> {
     
 
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String logradouro;

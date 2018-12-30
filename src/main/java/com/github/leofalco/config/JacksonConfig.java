@@ -21,7 +21,6 @@ public class JacksonConfig {
         mapper.registerModule(new Jdk8Module());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-
         return mapper;
     }
 }

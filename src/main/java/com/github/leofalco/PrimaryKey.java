@@ -1,5 +1,5 @@
 package com.github.leofalco;
 
-public interface Entidade<IdClass> {
+public interface PrimaryKey<IdClass> {
     IdClass getId();
 }

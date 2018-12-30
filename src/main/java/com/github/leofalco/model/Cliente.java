@@ -3,7 +3,7 @@ package com.github.leofalco.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.leofalco.dto.ClienteDTO;
-import com.github.leofalco.interfaces.AsDTO;
+import com.github.leofalco.interfaces.DataTransfer;
 import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.model.enumerador.TipoCliente;
 import com.github.leofalco.model.pedido.Pedido;
@@ -33,7 +33,7 @@ import static column.Def.com_github_leofalco_model_enumerador_TipoCliente;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Cliente implements Serializable, AsDTO<ClienteDTO> {
+public class Cliente implements Serializable, DataTransfer<ClienteDTO, Cliente> {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -79,5 +79,10 @@ public class Cliente implements Serializable, AsDTO<ClienteDTO> {
     @Override
     public ClienteDTO asDTO() {
         return new ClienteDTO();
+    }
+
+    @Override
+    public Cliente asEntity() {
+        return this;
     }
 }

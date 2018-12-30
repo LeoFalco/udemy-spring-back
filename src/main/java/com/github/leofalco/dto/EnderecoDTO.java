@@ -1,6 +1,6 @@
 package com.github.leofalco.dto;
 
-import com.github.leofalco.interfaces.AsEntity;
+import com.github.leofalco.interfaces.DataTransfer;
 import com.github.leofalco.model.endereco.Cidade;
 import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.model.endereco.Estado;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class EnderecoDTO implements AsEntity<Endereco> {
+public class EnderecoDTO implements DataTransfer<EnderecoDTO, Endereco> {
 
     private static final long serialVersionUID = -4735676142839964067L;
     private Long id;
@@ -24,6 +24,11 @@ public class EnderecoDTO implements AsEntity<Endereco> {
     private Cidade cidadeNome;
     private String estadoSigla;
     private String estadoNome;
+
+    @Override
+    public EnderecoDTO asDTO() {
+        return this;
+    }
 
     @Override
     public Endereco asEntity() {
