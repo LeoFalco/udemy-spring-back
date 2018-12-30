@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static column.Def.com_github_leofalco_model_enumerador_TipoCliente;
+
 
 @Entity
 @Table(name = "cliente")
@@ -51,6 +53,7 @@ public class Cliente implements Serializable, AsDTO<ClienteDTO> {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = com_github_leofalco_model_enumerador_TipoCliente)
     private TipoCliente tipo;
 
     @OneToMany(mappedBy = "cliente")
