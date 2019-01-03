@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ClienteService implements CrudInterface<Cliente, Integer> {
 
-    final ClienteRepository repo;
+    private final ClienteRepository repo;
 
     @Autowired
     public ClienteService(ClienteRepository repo) {

@@ -1,16 +1,11 @@
 package com.github.leofalco.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.leofalco.dto.ClienteDTO;
 import com.github.leofalco.interfaces.DataTransfer;
 import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.model.enumerador.TipoCliente;
 import com.github.leofalco.model.pedido.Pedido;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -19,20 +14,20 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import static column.Def.com_github_leofalco_model_enumerador_TipoCliente;
 
 
 @Entity
 @Table(name = "cliente")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Builder
 public class Cliente implements Serializable, DataTransfer<ClienteDTO, Cliente> {
     private static final long serialVersionUID = 1L;
 
@@ -62,10 +57,9 @@ public class Cliente implements Serializable, DataTransfer<ClienteDTO, Cliente> 
     @ElementCollection
     @CollectionTable(name = "telefone")
     @Column(name = "telefone")
-    private Set<String> telefones = new HashSet<>();
+    private List<String> telefones = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-    @JsonIgnore
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente(Long id, String nome, String email, String inscricaoFederal, TipoCliente tipo) {
@@ -78,7 +72,15 @@ public class Cliente implements Serializable, DataTransfer<ClienteDTO, Cliente> 
 
     @Override
     public ClienteDTO asDTO() {
-        return new ClienteDTO();
+        return ClienteDTO.builder()
+                .id(this.id)
+                .nome(this.nome)
+                .email(this.email)
+                .inscricaoFederal(this.inscricaoFederal)
+                .tipoCliente(this.tipo)
+                .enderecos(this.enderecos.stream().map(Endereco::asDTO).collect(Collectors.toList()))
+                .telefones(this.telefones)
+                .build();
     }
 
     @Override

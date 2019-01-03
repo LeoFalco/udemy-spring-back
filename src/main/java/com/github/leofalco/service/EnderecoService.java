@@ -22,8 +22,7 @@ public class EnderecoService implements CrudInterface<Endereco, Integer> {
 
     @Override
     public Endereco salvar(Endereco endereco) {
-        Endereco save = repo.save(endereco);
-        return save;
+        return repo.save(endereco);
     }
 
     @Override

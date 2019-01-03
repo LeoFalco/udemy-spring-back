@@ -1,6 +1,5 @@
 package com.github.leofalco.dto.errors;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +19,7 @@ public class ErrorDTO implements Serializable {
     private HttpStatus status;
     private String path;
     private Object detalhe;
+    private String method;
 
     //@JsonFormat(pattern = "dd/MM/yyyy hh:mm:SS.ssss")
     private final LocalDateTime timestamp = LocalDateTime.now();

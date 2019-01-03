@@ -135,8 +135,8 @@ public class MockTestDataService {
         Cliente marioSilva = new Cliente(null, "Mario Silva", "maria@gmailcom", "46849145851", TipoCliente.PESSOA_FISICA);
         marioSilva.getTelefones().addAll(Arrays.asList("1254778914", "458799641"));
 
-        Endereco e1 = new Endereco(null, "Rua flores", 300, "apto 203", "jardim jardim", "38220834", uberlandia, marioSilva);
-        Endereco e2 = new Endereco(null, "Avenida Mattos", 105, "sala 800", "Centro", "3877012", saoPaulo, marioSilva);
+        Endereco e1 = new Endereco(null, "Rua flores", "300", "apto 203", "jardim jardim", "38220834", uberlandia, marioSilva);
+        Endereco e2 = new Endereco(null, "Avenida Mattos", "105", "sala 800", "Centro", "3877012", saoPaulo, marioSilva);
 
 
         Pedido ped1 = new Pedido(null, Dates.toDate("01/01/2017 05:10"), marioSilva, e1);
@@ -144,7 +144,7 @@ public class MockTestDataService {
         ped1.setPagamento(pagto1);
 
         Pedido ped2 = new Pedido(null, Dates.toDate("10/10/2017 19:35"), marioSilva, e2);
-        Pagamento pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, Dates.toDate("20/10/2017 19:35"), null);
+        Pagamento pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, Dates.toLocalDateTime("20/10/2017 19:35"), null);
         ped2.setPagamento(pagto2);
 
         marioSilva.getPedidos().addAll(Arrays.asList(ped1, ped2));

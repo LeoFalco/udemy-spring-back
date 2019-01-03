@@ -9,9 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -39,5 +39,11 @@ public class CategoriaResourceTest {
         Assert.assertEquals("application/json;charset=UTF-8", mvcResult.getResponse().getContentType());
     }
 
+    @Test
+    public void postCategorias() throws Exception {
+        MvcResult mvcResult = this.mvc.perform(post("/categorias"))
+                .andExpect(status().isOk()).andReturn();
 
+        Assert.assertEquals("application/json;charset=UTF-8", mvcResult.getResponse().getContentType());
+    }
 }

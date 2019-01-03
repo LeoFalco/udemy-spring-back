@@ -1,14 +1,16 @@
 package com.github.leofalco.exeptions;
 
-import com.github.leofalco.exeptions.custom.IdNotNullExeption;
+import com.github.leofalco.dto.errors.ErrorDTO;
+import com.github.leofalco.dto.errors.FieldErrorMessage;
+import com.github.leofalco.exeptions.custom.IdNotNullException;
 import com.github.leofalco.exeptions.custom.ObjectAlreadyExistsException;
 import com.github.leofalco.exeptions.custom.OperationNotSupertedYetException;
 import com.github.leofalco.exeptions.custom.RelacionamentoException;
-import com.github.leofalco.dto.errors.ErrorDTO;
-import com.github.leofalco.dto.errors.FieldErrorMessage;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
-public class ResourceExeptionHandler extends ExceptionHandlerExceptionResolver {
+public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver {
 
 
     /**
@@ -32,21 +34,23 @@ public class ResourceExeptionHandler extends ExceptionHandlerExceptionResolver {
      *
      * @param status  http status
      * @param ex      exception
-     * @param request reques
+     * @param request request
      * @return ErrorDTO
      */
     private static ResponseEntity<ErrorDTO> buildError(HttpStatus status,
-                                                       RuntimeException ex,
+                                                       Throwable ex,
                                                        HttpServletRequest request) {
         return buildError(ex.getMessage(), status, ex, request);
     }
 
     private static ResponseEntity<ErrorDTO> buildError(String customMessage,
                                                        HttpStatus status,
-                                                       RuntimeException ex,
+                                                       Throwable ex,
                                                        HttpServletRequest request) {
+
         ErrorDTO error = ErrorDTO.builder()
                 .status(status)
+                .method(request.getMethod())
                 .path(request.getRequestURI())
                 .message(customMessage)
                 .error(ex.getClass().getSimpleName())
@@ -103,9 +107,10 @@ public class ResourceExeptionHandler extends ExceptionHandlerExceptionResolver {
     @ExceptionHandler(RelacionamentoException.class)
     public ResponseEntity<ErrorDTO> handleRelacionamentoException(RelacionamentoException e,
                                                                   HttpServletRequest request) {
-        return ResourceExeptionHandler.buildError(HttpStatus.BAD_REQUEST, e, request);
+        return ResourceExceptionHandler.buildError(HttpStatus.BAD_REQUEST, e, request);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
                                                                     HttpServletRequest request) {
 
@@ -128,9 +133,21 @@ public class ResourceExeptionHandler extends ExceptionHandlerExceptionResolver {
 
     }
 
-    @ExceptionHandler(IdNotNullExeption.class)
-    public ResponseEntity<ErrorDTO> handleIdNotNullExeption(IdNotNullExeption e,
-                                                            HttpServletRequest request) {
+    @ExceptionHandler(IdNotNullException.class)
+    public ResponseEntity<ErrorDTO> handleIdNotNullException(IdNotNullException e,
+                                                             HttpServletRequest request) {
+        return buildError(BAD_REQUEST, e, request);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+                                                                          HttpServletRequest request) {
+        return buildError(BAD_REQUEST, e.getRootCause(), request);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorDTO> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,
+                                                                                 HttpServletRequest request) {
         return buildError(BAD_REQUEST, e, request);
     }
 }

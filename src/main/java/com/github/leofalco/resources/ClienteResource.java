@@ -1,7 +1,7 @@
 package com.github.leofalco.resources;
 
 import com.github.leofalco.dto.ClienteDTO;
-import com.github.leofalco.exeptions.custom.IdNotNullExeption;
+import com.github.leofalco.exeptions.custom.IdNotNullException;
 import com.github.leofalco.model.Cliente;
 import com.github.leofalco.model.enumerador.EstadoPagamento;
 import com.github.leofalco.model.pedido.Pedido;
@@ -16,7 +16,6 @@ import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/clientes")
@@ -61,7 +60,7 @@ public class ClienteResource {
     private ResponseEntity<Cliente> post(@Valid @RequestBody Cliente cliente) {
 
         if (cliente.getId() != null)
-            throw new IdNotNullExeption();
+            throw new IdNotNullException();
 
         cliente = clienteService.salvar(cliente);
 

@@ -9,8 +9,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CategoriaDTO implements DataTransfer<CategoriaDTO, Categoria> {
 
     private static final long serialVersionUID = -8972499903386833214L;

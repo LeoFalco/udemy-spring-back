@@ -1,7 +1,7 @@
 package com.github.leofalco.resources;
 
 import com.github.leofalco.dto.CategoriaDTO;
-import com.github.leofalco.exeptions.custom.IdNotNullExeption;
+import com.github.leofalco.exeptions.custom.IdNotNullException;
 import com.github.leofalco.model.Categoria;
 import com.github.leofalco.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class CategoriaResource {
     public ResponseEntity<CategoriaDTO> post(@RequestBody Categoria categoria) {
 
         if (categoria.getId() != null) {
-            throw new IdNotNullExeption();
+            throw new IdNotNullException();
         }
 
         categoria = service.salvar(categoria);

@@ -52,8 +52,6 @@ public class CategoriaService implements CrudInterface<Categoria, Long> {
     public Categoria atualizar(Categoria categoria) {
         Categoria existe = get(categoria.getId());
 
-        existe.toString();
-
         return repo.save(categoria);
     }
 
