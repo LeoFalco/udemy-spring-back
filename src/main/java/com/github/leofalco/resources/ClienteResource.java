@@ -1,11 +1,11 @@
 package com.github.leofalco.resources;
 
-import com.github.leofalco.dto.ClienteDTO;
 import com.github.leofalco.exeptions.custom.IdNotNullException;
 import com.github.leofalco.model.Cliente;
 import com.github.leofalco.model.enumerador.EstadoPagamento;
 import com.github.leofalco.model.pedido.Pedido;
 import com.github.leofalco.service.ClienteService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.leofalco.util.Constants.APPLICATION_JSON_CHARSET_UTF8;
+
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping(value = "/clientes", consumes = APPLICATION_JSON_CHARSET_UTF8, produces = APPLICATION_JSON_CHARSET_UTF8)
+@Api(description = "Manipulação de Clientes", tags = "Clientes")
 public class ClienteResource {
 
     private final ClienteService clienteService;
@@ -30,9 +33,8 @@ public class ClienteResource {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    private List<ClienteDTO> listar() {
-        List<Cliente> clientes = clienteService.listar();
-        return clientes.stream().map(Cliente::asDTO).collect(Collectors.toList());
+    private List<Cliente> listar() {
+        return clienteService.listar();
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")

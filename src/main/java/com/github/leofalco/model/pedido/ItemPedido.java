@@ -2,10 +2,8 @@ package com.github.leofalco.model.pedido;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.leofalco.model.Produto;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,9 +12,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @EqualsAndHashCode(of = "id")
 public class ItemPedido implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -2,17 +2,15 @@ package com.github.leofalco.model.pagamento;
 
 import com.github.leofalco.model.enumerador.EstadoPagamento;
 import com.github.leofalco.model.pedido.Pedido;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 
 
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class PagamentoCartao extends Pagamento {
     private static final long serialVersionUID = 20L;
 

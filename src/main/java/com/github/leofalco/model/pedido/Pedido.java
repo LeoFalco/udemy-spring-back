@@ -1,129 +1,50 @@
 package com.github.leofalco.model.pedido;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.leofalco.model.Cliente;
-import com.github.leofalco.model.pagamento.Pagamento;
 import com.github.leofalco.model.endereco.Endereco;
+import com.github.leofalco.model.pagamento.Pagamento;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "pedido")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EqualsAndHashCode(of = "id")
+@Data
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Date instante;
+    private LocalDateTime instante;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-    private Endereco enderecoDeEntrega;
+    @ManyToOne
+    @JoinColumn(name = "endereco_entrega_id")
+    private Endereco enderecoEntrega;
+    @OneToMany(mappedBy = "id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
 
     public Pedido() {
     }
 
-    public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+    public Pedido(Integer id, LocalDateTime instante, Cliente cliente, Endereco enderecoEntrega) {
         super();
         this.id = id;
         this.instante = instante;
         this.cliente = cliente;
-        this.enderecoDeEntrega = enderecoDeEntrega;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    public Date getInstante() {
-        return instante;
-    }
-
-    public void setInstante(Date instante) {
-        this.instante = instante;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "endereco_de_entrega_id")
-    public Endereco getEnderecoDeEntrega() {
-        return enderecoDeEntrega;
-    }
-
-    public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
-        this.enderecoDeEntrega = enderecoDeEntrega;
-    }
-
-    @OneToMany(mappedBy = "id.pedido")
-    public Set<ItemPedido> getItens() {
-        return itens;
-    }
-
-    public void setItens(Set<ItemPedido> itens) {
-        this.itens = itens;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Pedido other = (Pedido) obj;
-        if (id == null) {
-            return other.id == null;
-        } else return id.equals(other.id);
-    }
-
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", instante=" + "{omitido}" +
-                ", pagamento=" + pagamento +
-                ", cliente=" + cliente.getId() +
-                ", enderecoDeEntrega=" + enderecoDeEntrega +
-                ", itens=" + itens +
-                '}';
+        this.enderecoEntrega = enderecoEntrega;
     }
 }

@@ -2,24 +2,18 @@ package com.github.leofalco.model.endereco;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.leofalco.PrimaryKey;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "estado")
-@NoArgsConstructor
-@EqualsAndHashCode
+@Data
 public class Estado implements PrimaryKey<String> {
 
-    @javax.persistence.Id
+    @Id
     @Column(length = 2, columnDefinition = "char(2)")
     private String uf;
 

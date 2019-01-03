@@ -1,7 +1,7 @@
 package com.github.leofalco.exeptions;
 
 import com.github.leofalco.dto.errors.ErrorDTO;
-import com.github.leofalco.dto.errors.FieldErrorMessage;
+import com.github.leofalco.dto.errors.FieldError;
 import com.github.leofalco.exeptions.custom.IdNotNullException;
 import com.github.leofalco.exeptions.custom.ObjectAlreadyExistsException;
 import com.github.leofalco.exeptions.custom.OperationNotSupertedYetException;
@@ -114,9 +114,9 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
     protected ResponseEntity<ErrorDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
                                                                     HttpServletRequest request) {
 
-        List<FieldErrorMessage> detail = e.getBindingResult().getFieldErrors().stream()
+        List<FieldError> detail = e.getBindingResult().getFieldErrors().stream()
                 .map(fieldError ->
-                        new FieldErrorMessage(fieldError.getField(),
+                        new FieldError(fieldError.getField(),
                                 fieldError.getDefaultMessage(),
                                 fieldError.getRejectedValue()))
                 .collect(Collectors.toList());

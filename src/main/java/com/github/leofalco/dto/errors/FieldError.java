@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @Getter
-public class FieldErrorMessage implements Serializable {
+public class FieldError implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String campo;

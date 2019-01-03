@@ -1,35 +1,27 @@
 package com.github.leofalco.model;
 
-import com.github.leofalco.dto.ClienteDTO;
-import com.github.leofalco.interfaces.DataTransfer;
 import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.model.enumerador.TipoCliente;
 import com.github.leofalco.model.pedido.Pedido;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static column.Def.com_github_leofalco_model_enumerador_TipoCliente;
 
 
 @Entity
 @Table(name = "cliente")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @EqualsAndHashCode(of = "id")
-@Builder
-public class Cliente implements Serializable, DataTransfer<ClienteDTO, Cliente> {
-    private static final long serialVersionUID = 1L;
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,23 +60,5 @@ public class Cliente implements Serializable, DataTransfer<ClienteDTO, Cliente> 
         this.email = email;
         this.inscricaoFederal = inscricaoFederal;
         this.tipo = tipo;
-    }
-
-    @Override
-    public ClienteDTO asDTO() {
-        return ClienteDTO.builder()
-                .id(this.id)
-                .nome(this.nome)
-                .email(this.email)
-                .inscricaoFederal(this.inscricaoFederal)
-                .tipoCliente(this.tipo)
-                .enderecos(this.enderecos.stream().map(Endereco::asDTO).collect(Collectors.toList()))
-                .telefones(this.telefones)
-                .build();
-    }
-
-    @Override
-    public Cliente asEntity() {
-        return this;
     }
 }

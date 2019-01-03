@@ -1,8 +1,5 @@
 package com.github.leofalco.model;
 
-import com.github.leofalco.PrimaryKey;
-import com.github.leofalco.dto.CategoriaDTO;
-import com.github.leofalco.interfaces.DataTransfer;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Categoria implements DataTransfer<CategoriaDTO, Categoria>, PrimaryKey<Long> {
+public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,17 +32,6 @@ public class Categoria implements DataTransfer<CategoriaDTO, Categoria>, Primary
     public Categoria(Long id, String descricao) {
         this.id = id;
         this.descricao = descricao;
-    }
-
-
-    @Override
-    public CategoriaDTO asDTO() {
-        return new CategoriaDTO(id, descricao);
-    }
-
-    @Override
-    public Categoria asEntity() {
-        return this;
     }
 
 }

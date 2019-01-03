@@ -2,6 +2,7 @@ package com.github.leofalco.resources;
 
 import com.github.leofalco.model.pedido.Pedido;
 import com.github.leofalco.service.PedidoService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.leofalco.util.Constants.APPLICATION_JSON_CHARSET_UTF8;
+
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping(value = "/pedidos", consumes = APPLICATION_JSON_CHARSET_UTF8, produces = APPLICATION_JSON_CHARSET_UTF8)
+@Api(description = "Manipulação de pedidos", tags = "Pedidos")
 public class PedidoResource {
 
     private final PedidoService pedidoService;
@@ -32,10 +36,7 @@ public class PedidoResource {
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public Pedido obter(@PathVariable Integer id) {
-
-
-        Pedido pedido = pedidoService.get(id);
-        return pedido;
+        return pedidoService.get(id);
     }
 
 
