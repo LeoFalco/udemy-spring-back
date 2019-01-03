@@ -31,11 +31,10 @@ public class PedidoResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public Pedido get(@PathVariable Integer id) {
+    public Pedido obter(@PathVariable Integer id) {
 
 
         Pedido pedido = pedidoService.get(id);
-        pedido.toString();
         return pedido;
     }
 

@@ -36,12 +36,12 @@ public class ClienteResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    private Cliente getOne(@PathVariable Integer id) {
+    private Cliente obter(@PathVariable Integer id) {
         return clienteService.get(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}/pedidos")
-    private List<Pedido> getPedidos(@PathVariable Integer id, @PathParam("estado") EstadoPagamento estado) {
+    private List<Pedido> listar(@PathVariable Integer id, @PathParam("estado") EstadoPagamento estado) {
 
         System.out.println("/pedidos");
         List<Pedido> pedidos = clienteService.get(id).getPedidos();
@@ -57,7 +57,7 @@ public class ClienteResource {
 
     //cria cliente
     @RequestMapping(method = RequestMethod.POST)
-    private ResponseEntity<Cliente> post(@Valid @RequestBody Cliente cliente) {
+    private ResponseEntity<Cliente> inserir(@Valid @RequestBody Cliente cliente) {
 
         if (cliente.getId() != null)
             throw new IdNotNullException();
@@ -75,7 +75,7 @@ public class ClienteResource {
 
     //atualiza cliente
     @RequestMapping(method = RequestMethod.POST, path = "/{id}")
-    private ResponseEntity<Cliente> put(@Valid @RequestBody Cliente cliente, @PathVariable Long id) {
+    private ResponseEntity<Cliente> atualizar(@Valid @RequestBody Cliente cliente, @PathVariable Long id) {
 
         cliente.setId(id);
         cliente = clienteService.salvar(cliente);

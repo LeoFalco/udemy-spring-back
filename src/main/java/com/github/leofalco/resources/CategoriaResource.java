@@ -34,13 +34,15 @@ public class CategoriaResource {
                 .collect(Collectors.toList());
     }
 
+
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public CategoriaDTO get(@PathVariable("id") Long id) {
+    public CategoriaDTO obter(@PathVariable("id") Long id) {
         return service.get(id).asDTO();
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<CategoriaDTO> post(@RequestBody Categoria categoria) {
+    public ResponseEntity<CategoriaDTO> inserir(@RequestBody Categoria categoria) {
 
         if (categoria.getId() != null) {
             throw new IdNotNullException();
@@ -57,7 +59,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}")
-    public ResponseEntity<CategoriaDTO> put(@RequestBody CategoriaDTO categoriaDTO, @PathVariable Long id) {
+    public ResponseEntity<CategoriaDTO> atualizar(@RequestBody CategoriaDTO categoriaDTO, @PathVariable Long id) {
 
         Categoria categoria = categoriaDTO.asEntity();
         categoria.setId(id);
@@ -68,7 +70,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> remover(@PathVariable Long id) {
 
         service.remover(id);
 
@@ -76,7 +78,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/page")
-    public ResponseEntity<Page<CategoriaDTO>> findPage(
+    public ResponseEntity<Page<CategoriaDTO>> pagina(
             @RequestParam(defaultValue = "0", name = "pagina", required = false) Integer pagina,
             @RequestParam(defaultValue = "24", name = "linesPerPage", required = false) Integer linesPerPage,
             @RequestParam(defaultValue = "descricao", name = "orderBy", required = false) String orderBy,
