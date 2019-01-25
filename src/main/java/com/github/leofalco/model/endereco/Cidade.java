@@ -1,13 +1,17 @@
 package com.github.leofalco.model.endereco;
 
 import com.github.leofalco.PrimaryKey;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cidade")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cidade implements PrimaryKey<Long> {
 
     @javax.persistence.Id

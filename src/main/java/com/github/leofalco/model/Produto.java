@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.leofalco.model.pedido.ItemPedido;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Table(name = "produto")
 @Data
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
 

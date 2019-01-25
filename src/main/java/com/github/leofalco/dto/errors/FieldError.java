@@ -12,5 +12,5 @@ public class FieldError implements Serializable {
 
     private String campo;
     private String message;
-    private Object rejectedValue;
+    private transient Object rejectedValue;
 }

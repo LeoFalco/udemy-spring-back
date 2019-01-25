@@ -5,6 +5,7 @@ import com.github.leofalco.model.enumerador.EstadoPagamento;
 import com.github.leofalco.model.pedido.Pedido;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import static column.Def.com_github_leofalco_model_enumerador_EstadoPagamento;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public abstract class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 

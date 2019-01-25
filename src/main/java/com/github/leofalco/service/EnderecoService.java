@@ -4,21 +4,17 @@ import com.github.leofalco.exeptions.custom.OperationNotSupertedYetException;
 import com.github.leofalco.interfaces.CrudInterface;
 import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.repository.EnderecoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor(onConstructor_ = @Autowired)
 public class EnderecoService implements CrudInterface<Endereco, Integer> {
 
-    final
-    EnderecoRepository repo;
-
-    @Autowired
-    public EnderecoService(EnderecoRepository repo) {
-        this.repo = repo;
-    }
+    private final EnderecoRepository repo;
 
     @Override
     public Endereco salvar(Endereco endereco) {

@@ -15,6 +15,7 @@ import com.github.leofalco.model.pedido.ItemPedido;
 import com.github.leofalco.model.pedido.Pedido;
 import com.github.leofalco.repository.*;
 import com.github.leofalco.util.Dates;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class MockTestDataService {
 
     private static boolean dadosCarregados = false;
@@ -38,29 +40,7 @@ public class MockTestDataService {
     private final ItemPedidoRepository itemPedidoRepository;
     private final PedidoRepository pedidoRepository;
 
-
-    @Autowired
-    public MockTestDataService(CategoriaRepository categoriaRepository,
-                               ProdutoRepository produtoRepository,
-                               EstadoRepository estadoRepository,
-                               CidadeRepository cidadeRepository,
-                               ClienteRepository clienteRepository,
-                               EnderecoRepository enderecoRepository,
-                               PedidoRepository pedidoRepository,
-                               PagamentoRepository pagamentoRepository,
-                               ItemPedidoRepository itemPedidoRepository) {
-        this.categoriaRepository = categoriaRepository;
-        this.produtoRepository = produtoRepository;
-        this.estadoRepository = estadoRepository;
-        this.cidadeRepository = cidadeRepository;
-        this.clienteRepository = clienteRepository;
-        this.enderecoRepository = enderecoRepository;
-        this.pagamentoRepository = pagamentoRepository;
-        this.itemPedidoRepository = itemPedidoRepository;
-        this.pedidoRepository = pedidoRepository;
-    }
-
-    public void mock() {
+    void mock() {
 
         if (dadosCarregados) {
             System.out.println("Dados já foram carregados, os dados podem ser carregados somente uma ves");
@@ -139,11 +119,11 @@ public class MockTestDataService {
         Endereco e2 = new Endereco(null, "Avenida Mattos", "105", "sala 800", "Centro", "3877012", saoPaulo, marioSilva);
 
 
-        Pedido ped1 = new Pedido(null, Dates.toDate("01/01/2017 05:10"), marioSilva, e1);
+        Pedido ped1 = new Pedido(null, Dates.toLocalDateTime("01/01/2017 05:10"), marioSilva, e1);
         Pagamento pagto1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6);
         ped1.setPagamento(pagto1);
 
-        Pedido ped2 = new Pedido(null, Dates.toDate("10/10/2017 19:35"), marioSilva, e2);
+        Pedido ped2 = new Pedido(null, Dates.toLocalDateTime("10/10/2017 19:35"), marioSilva, e2);
         Pagamento pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, Dates.toLocalDateTime("20/10/2017 19:35"), null);
         ped2.setPagamento(pagto2);
 

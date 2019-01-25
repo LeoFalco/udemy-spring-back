@@ -1,6 +1,6 @@
 package com.github.leofalco.exeptions;
 
-import com.github.leofalco.dto.errors.ErrorDTO;
+import com.github.leofalco.dto.errors.ErrorDto;
 import com.github.leofalco.dto.errors.FieldError;
 import com.github.leofalco.exeptions.custom.IdNotNullException;
 import com.github.leofalco.exeptions.custom.ObjectAlreadyExistsException;
@@ -35,20 +35,20 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
      * @param status  http status
      * @param ex      exception
      * @param request request
-     * @return ErrorDTO
+     * @return ErrorDto
      */
-    private static ResponseEntity<ErrorDTO> buildError(HttpStatus status,
+    private static ResponseEntity<ErrorDto> buildError(HttpStatus status,
                                                        Throwable ex,
                                                        HttpServletRequest request) {
         return buildError(ex.getMessage(), status, ex, request);
     }
 
-    private static ResponseEntity<ErrorDTO> buildError(String customMessage,
+    private static ResponseEntity<ErrorDto> buildError(String customMessage,
                                                        HttpStatus status,
                                                        Throwable ex,
                                                        HttpServletRequest request) {
 
-        ErrorDTO error = ErrorDTO.builder()
+        ErrorDto error = ErrorDto.builder()
                 .status(status)
                 .method(request.getMethod())
                 .path(request.getRequestURI())
@@ -59,19 +59,19 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
     }
 
     @ExceptionHandler(ObjectAlreadyExistsException.class)
-    public ResponseEntity<ErrorDTO> handleObjectAlreadyExistsException(ObjectAlreadyExistsException e,
+    public ResponseEntity<ErrorDto> handleObjectAlreadyExistsException(ObjectAlreadyExistsException e,
                                                                        HttpServletRequest request) {
         return buildError(ALREADY_REPORTED, e, request);
     }
 
     @ExceptionHandler(OperationNotSupertedYetException.class)
-    public ResponseEntity<ErrorDTO> handleOperationNotSupertedYetException(OperationNotSupertedYetException e,
+    public ResponseEntity<ErrorDto> handleOperationNotSupertedYetException(OperationNotSupertedYetException e,
                                                                            HttpServletRequest request) {
         return buildError(ALREADY_REPORTED, e, request);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorDTO> handleConstraintViolationException(ConstraintViolationException e,
+    public ResponseEntity<ErrorDto> handleConstraintViolationException(ConstraintViolationException e,
                                                                        HttpServletRequest request) {
 
         String message = e.getConstraintViolations().stream()
@@ -82,7 +82,7 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorDTO> handleDataIntegrityViolationException(DataIntegrityViolationException e,
+    public ResponseEntity<ErrorDto> handleDataIntegrityViolationException(DataIntegrityViolationException e,
                                                                           HttpServletRequest request) {
 
         // deixando excessão com mensagem mais amigável
@@ -96,7 +96,7 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorDTO> handleEntityNotFoundException(EntityNotFoundException e,
+    public ResponseEntity<ErrorDto> handleEntityNotFoundException(EntityNotFoundException e,
                                                                   HttpServletRequest request) {
 
         String message = e.getMessage().replace("com.github.leofalco.model.", "");
@@ -105,13 +105,13 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
     }
 
     @ExceptionHandler(RelacionamentoException.class)
-    public ResponseEntity<ErrorDTO> handleRelacionamentoException(RelacionamentoException e,
+    public ResponseEntity<ErrorDto> handleRelacionamentoException(RelacionamentoException e,
                                                                   HttpServletRequest request) {
         return ResourceExceptionHandler.buildError(HttpStatus.BAD_REQUEST, e, request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ErrorDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
+    protected ResponseEntity<ErrorDto> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
                                                                     HttpServletRequest request) {
 
         List<FieldError> detail = e.getBindingResult().getFieldErrors().stream()
@@ -121,7 +121,7 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
                                 fieldError.getRejectedValue()))
                 .collect(Collectors.toList());
 
-        ErrorDTO error = ErrorDTO.builder()
+        ErrorDto error = ErrorDto.builder()
                 .status(BAD_REQUEST)
                 .detalhe(detail)
                 .path(request.getRequestURI())
@@ -134,19 +134,19 @@ public class ResourceExceptionHandler extends ExceptionHandlerExceptionResolver 
     }
 
     @ExceptionHandler(IdNotNullException.class)
-    public ResponseEntity<ErrorDTO> handleIdNotNullException(IdNotNullException e,
+    public ResponseEntity<ErrorDto> handleIdNotNullException(IdNotNullException e,
                                                              HttpServletRequest request) {
         return buildError(BAD_REQUEST, e, request);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+    public ResponseEntity<ErrorDto> handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
                                                                           HttpServletRequest request) {
         return buildError(BAD_REQUEST, e.getRootCause(), request);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorDTO> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,
+    public ResponseEntity<ErrorDto> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,
                                                                                  HttpServletRequest request) {
         return buildError(BAD_REQUEST, e, request);
     }

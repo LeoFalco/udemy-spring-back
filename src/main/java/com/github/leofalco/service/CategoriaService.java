@@ -1,9 +1,11 @@
 package com.github.leofalco.service;
 
+import com.github.leofalco.dto.CategoriaDTO;
 import com.github.leofalco.exeptions.custom.RelacionamentoException;
 import com.github.leofalco.interfaces.CrudInterface;
 import com.github.leofalco.model.Categoria;
 import com.github.leofalco.repository.CategoriaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -11,17 +13,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor(onConstructor_ = @Autowired)
 public class CategoriaService implements CrudInterface<Categoria, Long> {
 
     private final CategoriaRepository repo;
-
-    @Autowired
-    public CategoriaService(CategoriaRepository repo) {
-        this.repo = repo;
-    }
+    private final EntityManager em;
 
     @Override
     public Categoria salvar(Categoria categoria) {
@@ -31,6 +32,13 @@ public class CategoriaService implements CrudInterface<Categoria, Long> {
     @Override
     public List<Categoria> listar() {
         return repo.findAll();
+    }
+
+
+    public List<CategoriaDTO> listarDTO() {
+        return repo.findAll().stream().map(categoria -> {
+            return new CategoriaDTO(categoria.getId(), categoria.getDescricao());
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -44,14 +52,12 @@ public class CategoriaService implements CrudInterface<Categoria, Long> {
         try {
             repo.delete(categoria);
         } catch (DataIntegrityViolationException ex) {
-            throw new RelacionamentoException();
+            throw new RelacionamentoException(ex);
         }
     }
 
     @Override
     public Categoria atualizar(Categoria categoria) {
-        Categoria existe = get(categoria.getId());
-
         return repo.save(categoria);
     }
 

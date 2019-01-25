@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class ErrorDTO implements Serializable {
+public class ErrorDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String error;
     private String message;
     private HttpStatus status;
     private String path;
-    private Object detalhe;
+    private transient Object detalhe;
     private String method;
 
     // hora do erro

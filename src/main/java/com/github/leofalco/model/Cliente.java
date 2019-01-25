@@ -3,8 +3,7 @@ package com.github.leofalco.model;
 import com.github.leofalco.model.endereco.Endereco;
 import com.github.leofalco.model.enumerador.TipoCliente;
 import com.github.leofalco.model.pedido.Pedido;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -19,8 +18,10 @@ import static column.Def.com_github_leofalco_model_enumerador_TipoCliente;
 
 @Entity
 @Table(name = "cliente")
-@Data
 @EqualsAndHashCode(of = "id")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Cliente {
 
     @Id

@@ -4,20 +4,17 @@ import com.github.leofalco.exeptions.custom.OperationNotSupertedYetException;
 import com.github.leofalco.interfaces.CrudInterface;
 import com.github.leofalco.model.pedido.Pedido;
 import com.github.leofalco.repository.PedidoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor(onConstructor_ = @Autowired)
 public class PedidoService implements CrudInterface<Pedido, Integer> {
 
     private final PedidoRepository repo;
-
-    @Autowired
-    public PedidoService(PedidoRepository repo) {
-        this.repo = repo;
-    }
 
     @Override
     public Pedido salvar(Pedido pedido) {

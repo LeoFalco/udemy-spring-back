@@ -6,6 +6,7 @@ import com.github.leofalco.model.enumerador.EstadoPagamento;
 import com.github.leofalco.model.pedido.Pedido;
 import com.github.leofalco.service.ClienteService;
 import io.swagger.annotations.Api;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,35 +18,29 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.github.leofalco.util.Constants.APPLICATION_JSON_CHARSET_UTF8;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 @RestController
-@RequestMapping(value = "/clientes", consumes = APPLICATION_JSON_CHARSET_UTF8, produces = APPLICATION_JSON_CHARSET_UTF8)
-@Api(description = "Manipulação de Clientes", tags = "Clientes")
+@RequestMapping(value = "/clientes", consumes = APPLICATION_JSON_UTF8_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
+@Api(tags = "Clientes")
+@AllArgsConstructor(onConstructor_ = @Autowired)
 public class ClienteResource {
 
     private final ClienteService clienteService;
 
-    @Autowired
-    public ClienteResource(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
 
-
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping()
     private List<Cliente> listar() {
         return clienteService.listar();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    @GetMapping(path = "/{id}")
     private Cliente obter(@PathVariable Integer id) {
         return clienteService.get(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}/pedidos")
+    @GetMapping(path = "/{id}/pedidos")
     private List<Pedido> listar(@PathVariable Integer id, @PathParam("estado") EstadoPagamento estado) {
-
-        System.out.println("/pedidos");
         List<Pedido> pedidos = clienteService.get(id).getPedidos();
 
         List<Pedido> collect = pedidos.stream().peek(pedido -> pedido.setCliente(null)).collect(Collectors.toList());
@@ -57,8 +52,7 @@ public class ClienteResource {
         return collect;
     }
 
-    //cria cliente
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     private ResponseEntity<Cliente> inserir(@Valid @RequestBody Cliente cliente) {
 
         if (cliente.getId() != null)
@@ -76,7 +70,7 @@ public class ClienteResource {
 
 
     //atualiza cliente
-    @RequestMapping(method = RequestMethod.POST, path = "/{id}")
+    @PostMapping(path = "/{id}")
     private ResponseEntity<Cliente> atualizar(@Valid @RequestBody Cliente cliente, @PathVariable Long id) {
 
         cliente.setId(id);

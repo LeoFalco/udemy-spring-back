@@ -1,9 +1,7 @@
 package com.github.leofalco.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,8 +10,7 @@ import java.util.List;
 
 @Entity
 @EqualsAndHashCode
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Categoria {
 
